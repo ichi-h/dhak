@@ -79,5 +79,27 @@ void main() {
       }
       fail('The command-line with syntax error passes the test.');
     });
+
+    test('Args: ["GitHub", "default", "foo"]', () {
+      args = ['GitHub', 'default', 'foo'];
+      checker = new ArgsChecker(args);
+      try {
+        checker.check();
+      } on DhakSyntaxException{
+        return;
+      }
+      fail('The command-line with syntax error passes the test.');
+    });
+
+    test('Args: ["GitHub", "-s", "default", "foo"]', () {
+      args = ['GitHub', '-s', 'default', 'foo'];
+      checker = new ArgsChecker(args);
+      try {
+        checker.check();
+      } on DhakSyntaxException {
+        return;
+      }
+      fail('The command-line with syntax error passes the test.');
+    });
   });
 }
