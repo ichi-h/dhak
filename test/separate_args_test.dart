@@ -3,8 +3,59 @@ import 'package:dhak/separate_args.dart' show SeparateArgs;
 
 void main() {
   group('Normal behavior', () {
+    group('Args: ["GitHub"]', () {
+      final args = ['GitHub'];
+      final sepArgs = new SeparateArgs(args);
+
+      test('SeparateArgs.title() is "GitHub"', () {
+        expect(sepArgs.title(), equals('GitHub'));
+      });
+
+      test('SeparateArgs.preset() is "default"', () {
+        expect(sepArgs.preset(), equals('default'));
+      });
+
+      test('SeparateArgs.options() is ""', () {
+        expect(sepArgs.option(), equals(''));
+      });
+    });
+
+    group('Args: ["GitHub", "default"]', () {
+      final args = ['GitHub', 'default'];
+      final sepArgs = new SeparateArgs(args);
+
+      test('SeparateArgs.title() is "GitHub"', () {
+        expect(sepArgs.title(), equals('GitHub'));
+      });
+
+      test('SeparateArgs.preset() is "default"', () {
+        expect(sepArgs.preset(), equals('default'));
+      });
+
+      test('SeparateArgs.options() is ""', () {
+        expect(sepArgs.option(), equals(''));
+      });
+    });
+
     group('Args: ["GitHub", "-s"]', () {
       final args = ['GitHub', '-s'];
+      final sepArgs = new SeparateArgs(args);
+
+      test('SeparateArgs.title() is "GitHub"', () {
+        expect(sepArgs.title(), equals('GitHub'));
+      });
+
+      test('SeparateArgs.preset() is "default"', () {
+        expect(sepArgs.preset(), equals('default'));
+      });
+
+      test('SeparateArgs.options() is "-s"', () {
+        expect(sepArgs.option(), equals('-s'));
+      });
+    });
+
+    group('Args: ["GitHub", "default", "-s"]', () {
+      final args = ['GitHub', 'default', '-s'];
       final sepArgs = new SeparateArgs(args);
 
       test('SeparateArgs.title() is "GitHub"', () {
