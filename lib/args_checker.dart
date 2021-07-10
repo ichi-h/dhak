@@ -40,7 +40,7 @@ class ArgsChecker {
 
         if (this._optionIndex() == -1) {
           var unknownValue = this.args[2];
-          throw new DhakSyntaxException('Syntax error: The argument $unknownValue(2) does not match the syntax of dhak.\n');
+          throw new DhakSyntaxException('Syntax error: The argument "$unknownValue (2)" does not match the syntax of dhak.\n');
         }
 
         break;
