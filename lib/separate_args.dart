@@ -43,7 +43,7 @@ class SeparateArgs {
   }
 
   bool _isOptionHelp(int index) {
-    return this.args[index] != '-h' || this.args[index] != '--help';
+    return this.args[index] == '-h' || this.args[index] == '--help';
   }
 
   int _optionIndex() {
