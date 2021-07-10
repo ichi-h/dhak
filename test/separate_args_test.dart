@@ -3,7 +3,7 @@ import 'package:dhak/separate_args.dart' show SeparateArgs;
 
 void main() {
   group('Normal behavior', () {
-    group('When the command-line arguments exist', () {
+    group('Args: ["GitHub", "-s"]', () {
       final args = ['GitHub', '-s'];
       final sepArgs = new SeparateArgs(args);
 
@@ -20,8 +20,8 @@ void main() {
       });
     });
 
-    group('When the command-line arguments are empty', () {
-      final args = [''];
+    group('Args: ["--help"]', () {
+      final args = ['--help'];
       final sepArgs = new SeparateArgs(args);
 
       test('SeparateArgs.title() is ""', () {
@@ -32,8 +32,8 @@ void main() {
         expect(sepArgs.preset(), equals(''));
       });
 
-      test('SeparateArgs.options() is ""', () {
-        expect(sepArgs.option(), equals(''));
+      test('SeparateArgs.options() is "--help"', () {
+        expect(sepArgs.option(), equals('--help'));
       });
     });
   });

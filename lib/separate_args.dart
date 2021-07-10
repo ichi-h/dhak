@@ -4,12 +4,12 @@ class SeparateArgs {
   SeparateArgs(this.args);
 
   String title() {
-    if (!this._argsExist()) return '';
+    if (this._isHelp()) return '';
     return this.args[0];
   }
 
   String preset() {
-    if (!this._argsExist()) return '';
+    if (this._isHelp()) return '';
 
     var optIndex = _optionIndex();
 
@@ -27,7 +27,7 @@ class SeparateArgs {
   }
 
   String option() {
-    if (!this._argsExist()) return '';
+    if (this._isHelp()) return this.args[0];
 
     var optIndex = this._optionIndex();
 
@@ -35,9 +35,15 @@ class SeparateArgs {
     return this.args[optIndex];
   }
 
-  bool _argsExist() {
-    if (this.args[0] == '') return false;
-    return true;
+  bool _isHelp() {
+    if (this.args.length == 1 && this._isOptionHelp(0)) {
+      return true;
+    }
+    return false;
+  }
+
+  bool _isOptionHelp(int index) {
+    return this.args[index] != '-h' || this.args[index] != '--help';
   }
 
   int _optionIndex() {
