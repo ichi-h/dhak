@@ -48,7 +48,7 @@ void main() {
     ArgsChecker checker;
 
     test('Args: ["-s", "GitHub"]', () {
-      args = ['-s', 'GitHub', 'default'];
+      args = ['-s', 'GitHub'];
       checker = new ArgsChecker(args);
       try {
         checker.check();
