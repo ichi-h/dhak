@@ -11,13 +11,11 @@ class SeparateArgs {
   String preset() {
     if (this._isHelp()) return '';
 
-    var optIndex = this._optionIndex();
-
     switch(this.args.length) {
       case 1:
         return 'default';
       case 2:
-        if (optIndex == -1) return this.args[1];
+        if (this._optionIndex() == -1) return this.args[1];
         return 'default';
       case 3:
         return this.args[1];
