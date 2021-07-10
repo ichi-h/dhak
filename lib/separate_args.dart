@@ -11,7 +11,7 @@ class SeparateArgs {
   String preset() {
     if (this._isHelp()) return '';
 
-    var optIndex = _optionIndex();
+    var optIndex = this._optionIndex();
 
     switch(this.args.length) {
       case 1:
