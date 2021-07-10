@@ -38,6 +38,11 @@ class ArgsChecker {
           this._hyphenException();
         }
 
+        if (this._optionIndex() == -1) {
+          var unknownValue = this.args[2];
+          throw new DhakSyntaxException('Syntax error: The argument $unknownValue(2) does not match the syntax of dhak.\n');
+        }
+
         break;
     }
 
@@ -50,6 +55,12 @@ class ArgsChecker {
 
   bool _isOptionHelp(int index) {
     return this.args[index] != '-h' || this.args[index] != '--help';
+  }
+
+  int _optionIndex() {
+    return this.args.indexWhere(
+      (arg) => arg.startsWith('-')
+    );
   }
 
   void _hyphenException() {
