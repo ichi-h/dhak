@@ -1,43 +1,43 @@
 import 'package:test/test.dart';
-import 'package:dhak/args_checker.dart' show ArgsChecker;
+import 'package:dhak/syntax_checker.dart' show SyntaxChecker;
 import 'package:dhak/dhak_exception.dart' show DhakSyntaxException;
 
 void main() {
   group('Normal behavior', () {
     var args;
-    ArgsChecker checker;
+    SyntaxChecker checker;
 
     test('Args: ["-h"]', () {
       args = ['-h'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       final result = checker.checkedArgs();
       expect(result, equals(args));
     });
 
     test('Args: ["GitHub"]', () {
       args = ['GitHub'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       final result = checker.checkedArgs();
       expect(result, equals(args));
     });
 
     test('Args: ["GitHub", "default"]', () {
       args = ['GitHub', 'default'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       final result = checker.checkedArgs();
       expect(result, equals(args));
     });
 
     test('Args: ["GitHub", "-s"]', () {
       args = ['GitHub', '-s'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       final result = checker.checkedArgs();
       expect(result, equals(args));
     });
 
     test('Args: ["GitHub", "default", "-s"]', () {
       args = ['GitHub', 'default', '-s'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       final result = checker.checkedArgs();
       expect(result, equals(args));
     });
@@ -45,11 +45,11 @@ void main() {
 
   group('Abnormal behavior', () {
     var args;
-    ArgsChecker checker;
+    SyntaxChecker checker;
 
     test('Args: ["-s", "GitHub"]', () {
       args = ['-s', 'GitHub'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       try {
         checker.check();
       } on DhakSyntaxException {
@@ -60,7 +60,7 @@ void main() {
 
     test('Args: ["-s", "GitHub", "default"]', () {
       args = ['-s', 'GitHub', 'default'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       try {
         checker.check();
       } on DhakSyntaxException {
@@ -71,7 +71,7 @@ void main() {
 
     test('Args: ["GitHub", "-s", "default"]', () {
       args = ['GitHub', '-s', 'default'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       try {
         checker.check();
       } on DhakSyntaxException {
@@ -82,7 +82,7 @@ void main() {
 
     test('Args: ["GitHub", "default", "foo"]', () {
       args = ['GitHub', 'default', 'foo'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       try {
         checker.check();
       } on DhakSyntaxException{
@@ -93,7 +93,7 @@ void main() {
 
     test('Args: ["GitHub", "-s", "default", "foo"]', () {
       args = ['GitHub', '-s', 'default', 'foo'];
-      checker = new ArgsChecker(args);
+      checker = new SyntaxChecker(args);
       try {
         checker.check();
       } on DhakSyntaxException {

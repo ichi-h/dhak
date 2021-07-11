@@ -1,8 +1,8 @@
 import 'package:dhak/dhak_exception.dart' show DhakSyntaxException;
 
-class ArgsChecker {
+class SyntaxChecker {
   final List<String> args;
-  ArgsChecker(this.args);
+  SyntaxChecker(this.args);
 
   List<String> checkedArgs() {
     try {
