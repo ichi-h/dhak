@@ -1,21 +1,27 @@
-class SeparateArgs {
-  final List<String> args;
+import 'package:dhak/process_args.dart';
 
-  SeparateArgs(this.args);
+class SeparateArgs {
+  late final List<String> args;
+  late final ProcessArgs _procArgs;
+
+  SeparateArgs(List<String> args) {
+    this.args = args;
+    this._procArgs = new ProcessArgs(args);
+  }
 
   String title() {
-    if (this._isHelp()) return '';
+    if (this._procArgs.isHelp()) return '';
     return this.args[0];
   }
 
   String preset() {
-    if (this._isHelp()) return '';
+    if (this._procArgs.isHelp()) return '';
 
     switch(this.args.length) {
       case 1:
         return 'default';
       case 2:
-        if (this._optionIndex() == -1) return this.args[1];
+        if (this._procArgs.optionIndex() == -1) return this.args[1];
         return 'default';
       case 3:
         return this.args[1];
@@ -25,28 +31,11 @@ class SeparateArgs {
   }
 
   String option() {
-    if (this._isHelp()) return this.args[0];
+    if (this._procArgs.isHelp()) return this.args[0];
 
-    var optIndex = this._optionIndex();
+    var optIndex = this._procArgs.optionIndex();
 
     if (optIndex == -1) return '';
     return this.args[optIndex];
-  }
-
-  bool _isHelp() {
-    if (this.args.length == 1 && this._isOptionHelp(0)) {
-      return true;
-    }
-    return false;
-  }
-
-  bool _isOptionHelp(int index) {
-    return this.args[index] == '-h' || this.args[index] == '--help';
-  }
-
-  int _optionIndex() {
-    return this.args.indexWhere(
-      (arg) => arg.startsWith('-')
-    );
   }
 }

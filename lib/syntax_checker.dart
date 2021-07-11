@@ -1,8 +1,14 @@
 import 'package:dhak/dhak_exception.dart' show DhakSyntaxException;
+import 'package:dhak/process_args.dart';
 
 class SyntaxChecker {
-  final List<String> args;
-  SyntaxChecker(this.args);
+  late final List<String> args;
+  late final ProcessArgs _procArgs;
+
+  SyntaxChecker(List<String> args) {
+    this.args = args;
+    this._procArgs = new ProcessArgs(args);
+  }
 
   List<String> checkedArgs() {
     try {
@@ -20,25 +26,25 @@ class SyntaxChecker {
 
     switch (this.args.length) {
       case 1:
-        if (this._isOption(0) && !_isOptionHelp(0)) {
+        if (this._procArgs.isOption(0) && !this._procArgs.isOptionHelp(0)) {
           this._hyphenException();
         }
 
         break;
 
       case 2:
-        if (this._isOption(0)) {
+        if (this._procArgs.isOption(0)) {
           this._hyphenException();
         }
 
         break;
 
       case 3:
-        if (this._isOption(0) || this._isOption(1)) {
+        if (this._procArgs.isOption(0) || this._procArgs.isOption(1)) {
           this._hyphenException();
         }
 
-        if (this._optionIndex() == -1) {
+        if (this._procArgs.optionIndex() == -1) {
           var errorArg = this.args[2];
           throw new DhakSyntaxException('Syntax error: The argument "$errorArg (2)" does not match the syntax of dhak.\n');
         }
@@ -47,20 +53,6 @@ class SyntaxChecker {
     }
 
     return this.args;
-  }
-
-  bool _isOption(int index) {
-    return this.args[index].startsWith('-');
-  }
-
-  bool _isOptionHelp(int index) {
-    return this.args[index] == '-h' || this.args[index] == '--help';
-  }
-
-  int _optionIndex() {
-    return this.args.indexWhere(
-      (arg) => arg.startsWith('-')
-    );
   }
 
   void _hyphenException() {
