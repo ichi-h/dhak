@@ -15,7 +15,7 @@ class ArgsChecker {
 
   List<String> check() {
     if (3 < this.args.length) {
-      throw new DhakSyntaxException('Syntax error: The length of the command-line argument must be less than or equal to 3.\n');
+      throw new DhakSyntaxException('Syntax error: The length of the command-line arguments must be less than or equal to 3.\n');
     }
 
     switch (this.args.length) {
@@ -39,8 +39,8 @@ class ArgsChecker {
         }
 
         if (this._optionIndex() == -1) {
-          var unknownValue = this.args[2];
-          throw new DhakSyntaxException('Syntax error: The argument "$unknownValue (2)" does not match the syntax of dhak.\n');
+          var errorArg = this.args[2];
+          throw new DhakSyntaxException('Syntax error: The argument "$errorArg (2)" does not match the syntax of dhak.\n');
         }
 
         break;
@@ -64,6 +64,6 @@ class ArgsChecker {
   }
 
   void _hyphenException() {
-    throw new DhakSyntaxException('Syntax error: Hyphens are not allowed in the first character of the title and preset.\n');
+    throw new DhakSyntaxException('Syntax error: Hyphens are not allowed in the first character of the <title> and <preset>.\n');
   }
 }
