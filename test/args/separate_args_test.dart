@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:dhak/separate_args.dart' show SeparateArgs;
+import 'package:dhak/args/separate_args.dart' show SeparateArgs;
 
 void main() {
   group('Normal behavior', () {

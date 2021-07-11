@@ -1,4 +1,4 @@
-import 'package:dhak/process_args.dart';
+import 'package:dhak/args/process_args.dart';
 
 class SeparateArgs {
   late final List<String> args;

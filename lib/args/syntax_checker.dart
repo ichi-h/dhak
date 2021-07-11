@@ -1,5 +1,5 @@
 import 'package:dhak/dhak_exception.dart' show DhakSyntaxException;
-import 'package:dhak/process_args.dart';
+import 'package:dhak/args/process_args.dart';
 
 class SyntaxChecker {
   late final List<String> args;

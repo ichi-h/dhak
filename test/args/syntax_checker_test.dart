@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:dhak/syntax_checker.dart' show SyntaxChecker;
+import 'package:dhak/args/syntax_checker.dart' show SyntaxChecker;
 import 'package:dhak/dhak_exception.dart' show DhakSyntaxException;
 
 void main() {
