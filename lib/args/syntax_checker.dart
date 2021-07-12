@@ -1,4 +1,4 @@
-import 'package:dhak/dhak_exception.dart' show DhakSyntaxException;
+import 'package:dhak/dhak_exception.dart' show DhakArgsException;
 import 'package:dhak/args/process_args.dart';
 
 class SyntaxChecker {
@@ -13,7 +13,7 @@ class SyntaxChecker {
   List<String> checkedArgs() {
     try {
       return this.check();
-    } on DhakSyntaxException catch (e) {
+    } on DhakArgsException catch (e) {
       print(e.message);
       return ['', '', '--help'];
     }
@@ -36,7 +36,7 @@ class SyntaxChecker {
         break;
 
       default:
-        throw new DhakSyntaxException(
+        throw new DhakArgsException(
             'Syntax error: The length of the command-line arguments must be less than or equal to 3.\n');
     }
 
@@ -70,7 +70,7 @@ class SyntaxChecker {
 
     if (this._procArgs.optionIndex() == -1) {
       var errorArg = this.args[2];
-      throw new DhakSyntaxException(
+      throw new DhakArgsException(
           'Syntax error: The argument "$errorArg (2)" does not match the syntax of dhak.\n');
     }
 
@@ -78,7 +78,7 @@ class SyntaxChecker {
   }
 
   void _hyphenException() {
-    throw new DhakSyntaxException(
+    throw new DhakArgsException(
         'Syntax error: Hyphens are not allowed in the first character of the <title> and <preset>.\n');
   }
 }
