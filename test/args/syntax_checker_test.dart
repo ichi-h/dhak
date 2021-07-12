@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:dhak/args/syntax_checker.dart' show SyntaxChecker;
-import 'package:dhak/dhak_exception.dart' show DhakSyntaxException;
+import 'package:dhak/dhak_exception.dart' show DhakArgsException;
 
 void main() {
   group('Normal behavior', () {
@@ -56,7 +56,7 @@ void main() {
       checker = new SyntaxChecker(args);
       try {
         checker.check();
-      } on DhakSyntaxException {
+      } on DhakArgsException {
         return;
       }
       fail('The command-line with syntax error passes the test.');
@@ -67,7 +67,7 @@ void main() {
       checker = new SyntaxChecker(args);
       try {
         checker.check();
-      } on DhakSyntaxException {
+      } on DhakArgsException {
         return;
       }
       fail('The command-line with syntax error passes the test.');
@@ -78,7 +78,7 @@ void main() {
       checker = new SyntaxChecker(args);
       try {
         checker.check();
-      } on DhakSyntaxException {
+      } on DhakArgsException {
         return;
       }
       fail('The command-line with syntax error passes the test.');
@@ -89,7 +89,7 @@ void main() {
       checker = new SyntaxChecker(args);
       try {
         checker.check();
-      } on DhakSyntaxException {
+      } on DhakArgsException {
         return;
       }
       fail('The command-line with syntax error passes the test.');
@@ -100,7 +100,7 @@ void main() {
       checker = new SyntaxChecker(args);
       try {
         checker.check();
-      } on DhakSyntaxException {
+      } on DhakArgsException {
         return;
       }
       fail('The command-line with syntax error passes the test.');
