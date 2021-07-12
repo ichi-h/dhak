@@ -10,36 +10,40 @@ void main() {
     test('Args: ["-h"]', () {
       args = ['-h'];
       checker = new SyntaxChecker(args);
-      final result = checker.checkedArgs();
-      expect(result, equals(args));
+      final actual = checker.checkedArgs();
+      final expected = ['', '', '-h'];
+      expect(actual, equals(expected));
     });
 
     test('Args: ["GitHub"]', () {
       args = ['GitHub'];
       checker = new SyntaxChecker(args);
-      final result = checker.checkedArgs();
-      expect(result, equals(args));
+      final actual = checker.checkedArgs();
+      final expected = ['GitHub', 'default', ''];
+      expect(actual, equals(expected));
     });
 
     test('Args: ["GitHub", "default"]', () {
       args = ['GitHub', 'default'];
       checker = new SyntaxChecker(args);
-      final result = checker.checkedArgs();
-      expect(result, equals(args));
+      final actual = checker.checkedArgs();
+      final expected = ['GitHub', 'default', ''];
+      expect(actual, equals(expected));
     });
 
     test('Args: ["GitHub", "-s"]', () {
       args = ['GitHub', '-s'];
       checker = new SyntaxChecker(args);
-      final result = checker.checkedArgs();
-      expect(result, equals(args));
+      final actual = checker.checkedArgs();
+      final expected = ['GitHub', 'default', '-s'];
+      expect(actual, equals(expected));
     });
 
     test('Args: ["GitHub", "default", "-s"]', () {
       args = ['GitHub', 'default', '-s'];
       checker = new SyntaxChecker(args);
-      final result = checker.checkedArgs();
-      expect(result, equals(args));
+      final actual = checker.checkedArgs();
+      expect(actual, equals(args));
     });
   });
 
@@ -85,7 +89,7 @@ void main() {
       checker = new SyntaxChecker(args);
       try {
         checker.check();
-      } on DhakSyntaxException{
+      } on DhakSyntaxException {
         return;
       }
       fail('The command-line with syntax error passes the test.');
