@@ -1,19 +1,17 @@
-import 'dart:io';
-import 'package:dbcrypt/dbcrypt.dart';
+import 'package:dhak/args/syntax_checker.dart';
+import 'package:dhak/cmd/command_routing.dart';
 
 void main(List<String> arguments) {
-  stdin.echoMode = false;
+  if (arguments.length == 0) {
+    arguments = ['', '', '--help'];
+  }
 
-  print('Type some words: ');
+  final checker = SyntaxChecker(arguments);
 
-  var words = stdin.readLineSync().toString();
+  final args = checker.checkedArgs();
 
-  DBCrypt dbCrypt = DBCrypt();
-  String hashedPwd = dbCrypt.hashpw(words, dbCrypt.gensalt());
-
-  print('\nInput words: ');
-  print(words);
-
-  print('\nHashed words: ');
-  print(hashedPwd);
+  CommandRouting(args[0], args[1], args[2]).run();
+    // [0] title
+    // [1] preset
+    // [2] option
 }
