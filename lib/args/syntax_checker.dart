@@ -24,15 +24,15 @@ class SyntaxChecker {
 
     switch (this.args.length) {
       case 1:
-        result = this._onOne();
+        result = this._caseOne();
         break;
 
       case 2:
-        result = this._onTwo();
+        result = this._caseTwo();
         break;
 
       case 3:
-        result = this._onThree();
+        result = this._caseThree();
         break;
 
       default:
@@ -43,7 +43,7 @@ class SyntaxChecker {
     return result;
   }
 
-  List<String> _onOne() {
+  List<String> _caseOne() {
     if (this._procArgs.isOption(0)) {
       return ['', '', this.args[0]];
     }
@@ -51,7 +51,7 @@ class SyntaxChecker {
     return [this.args[0], 'default', ''];
   }
 
-  List<String> _onTwo() {
+  List<String> _caseTwo() {
     if (this._procArgs.isOption(0)) {
       this._hyphenException();
     }
@@ -63,7 +63,7 @@ class SyntaxChecker {
     return [this.args[0], this.args[1], ''];
   }
 
-  List<String> _onThree() {
+  List<String> _caseThree() {
     if (this._procArgs.isOption(0) || this._procArgs.isOption(1)) {
       this._hyphenException();
     }
