@@ -1,4 +1,5 @@
 import 'package:dhak/cmd/cmd.dart';
+import 'package:dhak/cmd/help_cmd.dart';
 import 'package:dhak/cmd/version_cmd.dart';
 import 'package:dhak/dhak_exception.dart';
 
@@ -11,7 +12,7 @@ class CommandRouting extends Cmd {
 
   void run() {
     try {
-      this._actualRun();
+      this._runCmd();
     } on DhakArgsException catch (e) {
       print(e.message);
       CommandRouting('', '', '--help').run();
@@ -20,7 +21,7 @@ class CommandRouting extends Cmd {
     }
   }
 
-  void _actualRun() {
+  void _runCmd() {
     final Cmd cmd;
 
     if (this.title == '') {
@@ -36,8 +37,7 @@ class CommandRouting extends Cmd {
     switch (this.option) {
       case '-h':
       case '--help':
-        // TODO: implement help
-        break;
+        return HelpCmd();
 
       case '-v':
       case '--version':
