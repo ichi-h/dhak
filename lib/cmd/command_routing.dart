@@ -1,4 +1,5 @@
 import 'package:dhak/cmd/cmd.dart';
+import 'package:dhak/cmd/version_cmd.dart';
 import 'package:dhak/dhak_exception.dart';
 
 class CommandRouting extends Cmd {
@@ -20,15 +21,18 @@ class CommandRouting extends Cmd {
   }
 
   void _actualRun() {
+    final Cmd cmd;
+
     if (this.title == '') {
-      this._runOptionCommand();
-      return;
+      cmd = this._optionCommand();
+    } else {
+      // TODO: implement process of generate password
     }
 
-    // TODO: implement process of generate password
+    cmd.run();
   }
 
-  void _runOptionCommand() {
+  Cmd _optionCommand() {
     switch (this.option) {
       case '-h':
       case '--help':
@@ -37,8 +41,7 @@ class CommandRouting extends Cmd {
 
       case '-v':
       case '--version':
-        // TODO: implement version
-        break;
+        return VersionCmd();
 
       default:
         throw DhakArgsException(
