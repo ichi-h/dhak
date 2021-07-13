@@ -1,4 +1,5 @@
 import 'package:dhak/cmd/cmd.dart';
+import 'package:dhak/cmd/generate_cmd.dart';
 import 'package:dhak/cmd/help_cmd.dart';
 import 'package:dhak/cmd/version_cmd.dart';
 import 'package:dhak/dhak_exception.dart';
@@ -27,7 +28,7 @@ class CommandRouting extends Cmd {
     if (this.title == '') {
       cmd = this._optionCommand();
     } else {
-      // TODO: implement process of generate password
+      cmd = GenerateCmd(this.title, this.preset, this.option);
     }
 
     cmd.run();
