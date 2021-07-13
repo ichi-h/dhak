@@ -1,10 +1,6 @@
 import 'package:dhak/cmd/cmd.dart';
 
-class Help extends Cmd {
-  final String option;
-
-  Help(this.option);
-
+class HelpCmd extends Cmd {
   @override
   void run() {
     // TODO: implement run
