@@ -1,4 +1,4 @@
-import 'package:dhak/dhak_exception.dart' show DhakArgsException;
+import 'package:dhak/util/dhak_exception.dart' show DhakArgsException;
 import 'package:dhak/args/process_args.dart';
 
 class SyntaxChecker {

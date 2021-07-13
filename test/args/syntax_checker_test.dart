@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:dhak/args/syntax_checker.dart' show SyntaxChecker;
-import 'package:dhak/dhak_exception.dart' show DhakArgsException;
+import 'package:dhak/util/dhak_exception.dart' show DhakArgsException;
 
 void main() {
   group('Normal behavior', () {

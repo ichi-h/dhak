@@ -1,5 +1,5 @@
 import 'package:dhak/cmd/cmd.dart';
-import 'package:dhak/global_const.dart';
+import 'package:dhak/util/global_const.dart';
 
 class VersionCmd extends Cmd {
   @override
