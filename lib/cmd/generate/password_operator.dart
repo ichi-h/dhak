@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:dhak/util/global_const.dart';
+
 class PasswordOperator {
   final String password;
 
@@ -19,6 +21,28 @@ class PasswordOperator {
       var targetIndex = rnd.nextInt(passLen);
       var symbol = symbols[rnd.nextInt(symbols.length)];
       result = result.replaceRange(targetIndex, targetIndex + 1, symbol);
+    }
+
+    return result;
+  }
+
+  String replaceSymbols() {
+    final rnd = Random(this.password.hashCode);
+    final letterLen = GlobalConst.letters.length;
+
+    var result = this.password;
+
+    for (var i = 0; i < this.password.length; i++) {
+      var char = this.password[i];
+      var unit = char.codeUnitAt(0);
+
+      if (!this._isLowerCase(unit) &&
+          !this._isUpperCase(unit) &&
+          !this._isNumber(unit)) {
+        var index = rnd.nextInt(letterLen);
+        var newChar = GlobalConst.letters[index];
+        result = result.replaceRange(i, i + 1, newChar);
+      }
     }
 
     return result;

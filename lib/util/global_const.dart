@@ -1,6 +1,12 @@
 class GlobalConst {
   static const VERSION = '0.1.0';
 
+  static final letters = [
+    GlobalConst.LOWER_CASE,
+    GlobalConst.UPPER_CASE,
+    GlobalConst.NUMBER
+  ].expand((element) => element).toList();
+
   static const LOWER_CASE = [
     'a',
     'b',
@@ -59,5 +65,5 @@ class GlobalConst {
     'Z'
   ];
 
-  static const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  static const NUMBER = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 }
