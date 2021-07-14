@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('Normal behavior', () {
-    test('Replace char of password by symbols', () {
+    test('Replace char of password with symbols', () {
       var password = "mq55vn43JnIQSQnh3YJL";
       var symbols = ['/', '#', '%', '@', '+', '-', '_'];
 
