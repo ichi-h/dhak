@@ -1,11 +1,11 @@
 import 'dart:math';
 
-class RandomReplacer {
+class PasswordOperator {
   final String password;
 
-  RandomReplacer(this.password);
+  PasswordOperator(this.password);
 
-  String replaceBy(List<String> symbols) {
+  String replaceAtRandomWith(List<String> symbols) {
     final rnd = Random(this.password.hashCode);
     final passLen = this.password.length;
 
@@ -20,9 +20,6 @@ class RandomReplacer {
       var symbol = symbols[rnd.nextInt(symbols.length)];
       result = result.replaceRange(targetIndex, targetIndex + 1, symbol);
     }
-
-    print(this.password);
-    print(result);
 
     return result;
   }

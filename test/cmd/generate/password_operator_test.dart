@@ -1,4 +1,4 @@
-import 'package:dhak/cmd/generate/random_replacer.dart';
+import 'package:dhak/cmd/generate/password_operator.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -9,8 +9,8 @@ void main() {
 
       var result = ['', ''];
       for (var i = 0; i < 2; i++) {
-        var rr = RandomReplacer(password);
-        result[i] = rr.replaceBy(symbols);
+        var rr = PasswordOperator(password);
+        result[i] = rr.replaceAtRandomWith(symbols);
       }
 
       if (result[0] != result[1]) {
