@@ -1,7 +1,7 @@
 import 'package:dhak/cmd/cmd.dart';
-import 'package:dhak/cmd/generate_cmd.dart';
-import 'package:dhak/cmd/help_cmd.dart';
-import 'package:dhak/cmd/version_cmd.dart';
+import 'package:dhak/cmd/generate/generate_cmd.dart';
+import 'package:dhak/cmd/help/help_cmd.dart';
+import 'package:dhak/cmd/version/version_cmd.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
 class CommandRouting extends Cmd {

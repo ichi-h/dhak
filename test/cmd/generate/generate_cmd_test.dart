@@ -1,4 +1,4 @@
-import 'package:dhak/cmd/generate_cmd.dart';
+import 'package:dhak/cmd/generate/generate_cmd.dart';
 import 'package:test/test.dart';
 import 'package:dart_clipboard/dart_clipboard.dart';
 
