@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dbcrypt: ^2.0.0
   test: ^1.16.8
+  dart_clipboard:
+    git: git://github.com/ippee/dart_clipboard.git
 
 dev_dependencies:
   flutter_test:
