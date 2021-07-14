@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:dhak/util/global_const.dart';
-
 class PasswordOperator {
   final String password;
 
@@ -29,16 +27,15 @@ class PasswordOperator {
   bool hasSymbols() {
     var result = this.password;
 
-    for (var char in GlobalConst.LOWER_CASE) {
-      result = result.replaceAll(char, '');
-    }
+    for (var i = 0; i < this.password.length; i++) {
+      var char = this.password[i];
+      var unit = char.codeUnitAt(0);
 
-    for (var char in GlobalConst.UPPER_CASE) {
-      result = result.replaceAll(char, '');
-    }
-
-    for (var num in GlobalConst.NUMBERS) {
-      result = result.replaceAll(num.toString(), '');
+      if (this._isLowerCase(unit) ||
+          this._isUpperCase(unit) ||
+          this._isNumber(unit)) {
+        result = result.replaceAll(char, '');
+      }
     }
 
     if (0 < result.length) return true;
@@ -47,33 +44,41 @@ class PasswordOperator {
   }
 
   bool isSecure() {
-    var result = {'lowerCase': false, 'upperCase': false, 'numbers': false};
+    var result = {'lowerCase': false, 'upperCase': false, 'number': false};
 
-    for (var char in GlobalConst.LOWER_CASE) {
-      if (this.password.contains(char)) {
+    for (var i = 0; i < this.password.length; i++) {
+      var unit = this.password[i].codeUnitAt(0);
+
+      if (this._isLowerCase(unit)) {
         result['lowerCase'] = true;
-        break;
-      }
-    }
-
-    for (var char in GlobalConst.UPPER_CASE) {
-      if (this.password.contains(char)) {
+      } else if (this._isUpperCase(unit)) {
         result['upperCase'] = true;
-        break;
+      } else if (this._isNumber(unit)) {
+        result['number'] = true;
       }
     }
 
-    for (var num in GlobalConst.NUMBERS) {
-      if (this.password.contains(num.toString())) {
-        result['numbers'] = true;
-        break;
-      }
-    }
-
-    if (result['lowerCase']! && result['upperCase']! && result['numbers']!) {
+    if (result['lowerCase']! && result['upperCase']! && result['number']!) {
       return true;
     }
 
+    return false;
+  }
+
+  bool _isLowerCase(int utf16CodeUnit) {
+    return this._inRange(utf16CodeUnit, 97, 122);
+  }
+
+  bool _isUpperCase(int utf16CodeUnit) {
+    return this._inRange(utf16CodeUnit, 65, 90);
+  }
+
+  bool _isNumber(int utf16CodeUnit) {
+    return this._inRange(utf16CodeUnit, 48, 57);
+  }
+
+  bool _inRange(int target, int lower, int upper) {
+    if (lower <= target && target <= upper) return true;
     return false;
   }
 }
