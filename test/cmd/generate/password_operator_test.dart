@@ -25,6 +25,17 @@ void main() {
       }
     });
 
+    test('Replace symbols with char', () {
+      var password = r"PQqQaZ5I'mmw6.\h`\a;";
+      operator = PasswordOperator(password);
+
+      var result = operator.replaceSymbols();
+
+      if (result == password) {
+        fail('Password was not replaced.');
+      }
+    });
+
     test('Has symbols', () {
       var password = r"PQqQaZ5I'mmw6.\h`\a;";
       operator = PasswordOperator(password);
