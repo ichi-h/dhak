@@ -1,0 +1,14 @@
+preset:
+
+  # This is the default setting which dhak uses.
+  # If you want to add a new preset, write a setting follow the format below.
+
+  # Preset name
+  default:
+
+    # Length of generated password (8-31)
+    password_length: 20
+
+    # Symbols used for passwords
+    # (If "symbols" is empty, you will get passwords without symbols.)
+    symbols: ["/", "#", "%", "&", "@", "+", "-", "_"]
