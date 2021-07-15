@@ -6,7 +6,7 @@ import 'package:dart_clipboard/dart_clipboard.dart';
 
 void main() {
   group('Normal behavior', () {
-    tearDown(() {
+    tearDownAll(() {
       var config = Config('./.dhakrc');
       var preset = Preset('default', config.doc());
       preset.setSalt('');
