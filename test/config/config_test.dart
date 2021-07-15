@@ -6,7 +6,7 @@ void main() {
 
   group('Normal behavior', () {
     test('Get default preset', () {
-      config = Config('./config.yaml');
+      config = Config('./config.json');
       var preset = config.getPreset('default');
 
       var result = {

@@ -38,8 +38,8 @@ class Config {
   }
 
   void _writeConfig() {
-    print('"config.yaml" was not found.');
-    print('Initializing "config.yaml" now...');
+    print('"config.json" was not found.');
+    print('Initializing "config.json" now...');
     var yaml = Config._stringConfig();
     this.file.writeAsStringSync(yaml);
     print('Finished!');
