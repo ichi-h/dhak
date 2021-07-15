@@ -1,7 +1,7 @@
-class ProcessArgs {
+class ArgsInfo {
   final List<String> args;
 
-  ProcessArgs(this.args);
+  ArgsInfo(this.args);
 
   bool isOption(int index) {
     return this.args[index].startsWith('-');
