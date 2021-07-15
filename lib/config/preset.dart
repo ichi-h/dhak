@@ -7,6 +7,8 @@ class Preset {
   late String _salt;
 
   Preset(String presetName, Map<String, dynamic> doc) {
+    this._name = presetName;
+
     final preset = doc['presets'][presetName];
 
     if (preset == null) {
