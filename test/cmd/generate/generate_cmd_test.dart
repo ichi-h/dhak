@@ -7,7 +7,7 @@ import 'package:dart_clipboard/dart_clipboard.dart';
 void main() {
   group('Normal behavior', () {
     tearDown(() {
-      var config = Config('./config.json');
+      var config = Config('./.dhakrc');
       var preset = Preset('default', config.doc());
       preset.setSalt('');
       config.setPresets(preset);
@@ -18,7 +18,7 @@ void main() {
       final args = ['Google', 'default', ''];
       final passPhrase = 'John ate 2 peanuts and 1 banana.';
       final gen =
-          GenerateCmd(args[0], args[1], args[2], passPhrase, './config.json');
+          GenerateCmd(args[0], args[1], args[2], passPhrase, './.dhakrc');
 
       var result = ['', ''];
       for (var i = 0; i < 2; i++) {

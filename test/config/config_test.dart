@@ -7,7 +7,7 @@ void main() {
 
   group('Normal behavior', () {
     test('Get default preset', () {
-      config = Config('./config.json');
+      config = Config('./.dhakrc');
       var preset = Preset('default', config.doc());
 
       var result = {
