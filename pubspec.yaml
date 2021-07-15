@@ -32,6 +32,7 @@ dependencies:
   test: ^1.16.8
   dart_clipboard:
     git: git://github.com/ippee/dart_clipboard.git
+  yaml: ^3.1.0
 
 dev_dependencies:
   flutter_test:
