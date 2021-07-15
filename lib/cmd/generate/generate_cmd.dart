@@ -43,8 +43,7 @@ class GenerateCmd extends Cmd {
 
     status = PasswordStatus(passPhrase);
     if (!status.isSecure()) {
-      print('WARNING: The passphrase you entered was not secure.');
-      print(
+      print('WARNING: The passphrase you entered was not secure. '
           'A passphrase should have length of 8 or more and contain at least one lower-case, upper-case and number.\n');
     }
 
@@ -60,7 +59,7 @@ class GenerateCmd extends Cmd {
       preset.setSalt(DBCrypt().gensalt());
       config.setPresets(preset);
       config.write();
-      print('Override the salt value of the preset "${this.presetName}".');
+      print('Override the salt value of the preset "${this.presetName}".\n');
     }
 
     var password = this._genPassword(target, config, preset);

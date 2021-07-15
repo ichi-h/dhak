@@ -15,7 +15,7 @@ class Config {
       print('Creating "$path" now...');
       var json = Config._stringConfig();
       this.file.writeAsStringSync(json);
-      print('Finished!');
+      print('Finished!\n');
     }
 
     var contents = this.file.readAsStringSync();
