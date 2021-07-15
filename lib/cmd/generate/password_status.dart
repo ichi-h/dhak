@@ -27,6 +27,8 @@ class PasswordStatus {
   bool isSecure() {
     var result = {'lowerCase': false, 'upperCase': false, 'number': false};
 
+    if (this.password.length < 8) return false;
+
     for (var i = 0; i < this.password.length; i++) {
       var unit = this.password[i].codeUnitAt(0);
 
