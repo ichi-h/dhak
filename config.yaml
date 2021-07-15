@@ -1,14 +1,37 @@
-preset:
+# Presets which dhak uses when it generates passwords.
+# If you want to add a new preset, write a setting follow the format
+# below.
+presets:
 
-  # This is the default setting which dhak uses.
-  # If you want to add a new preset, write a setting follow the format below.
-
-  # Preset name
+  # Preset name.
+  # You can use the preset named "default" when you omit the <preset>
+  # argument of the dhak command (of course, you can use it without
+  # omitting it).
   default:
 
-    # Length of generated password (8-31)
+    # Length of generated password. (8-31)
     password_length: 20
 
-    # Symbols used for passwords
-    # (If "symbols" is empty, you will get passwords without symbols.)
-    symbols: ["/", "#", "%", "&", "@", "+", "-", "_"]
+    # Symbols used for passwords.
+    # You can use any symbols except lower-case, upper-case and numbers.
+    # If you keep this empty, you will get passwords without symbols.
+    symbols: [ "/", "#", "%", "&", "@", "+", "-", "_" ]
+
+    # Salt of BCrypt (DANGER)
+    # IF YOU CHANGE THIS VALUE, THE OUTPUT PASSWORD WILL ALSO CHANGE!
+    # BASICALLY, YOU DO NOT HAVE TO CHANGE IT.
+    #
+    # When you add a new preset, set the value to "".
+    # Then, the first time you generate a password, dhak will overwrite
+    # it with something like the following string.
+    #
+    # - $2b$10$gEFq.t64qSdMqKw3NHR0YO
+    #   - $2b
+    #     - Algorithm of generating hash. (2, 2a, 2y, 2b)
+    #   - $10
+    #     - 2^n rounds of stretching. (4 <= n <= 31)
+    #   - $gEFq.t64qSdMqKw3NHR0YO
+    #     - String appended to the title and passphrase.
+    #     - The length of it must be 22.
+    #     - It is preferable to be a different value from the others.
+    salt: ""
