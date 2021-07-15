@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dhak/cmd/generate/code_unit_range.dart';
 import 'package:dhak/util/global_const.dart';
 
 class PasswordOperator {
@@ -36,9 +37,9 @@ class PasswordOperator {
       var char = this.password[i];
       var unit = char.codeUnitAt(0);
 
-      if (!this._isLowerCase(unit) &&
-          !this._isUpperCase(unit) &&
-          !this._isNumber(unit)) {
+      if (!CodeUnitRange.isLowerCase(unit) &&
+          !CodeUnitRange.isUpperCase(unit) &&
+          !CodeUnitRange.isNumber(unit)) {
         var index = rnd.nextInt(letterLen);
         var newChar = GlobalConst.letters[index];
         result = result.replaceRange(i, i + 1, newChar);
@@ -55,9 +56,9 @@ class PasswordOperator {
       var char = this.password[i];
       var unit = char.codeUnitAt(0);
 
-      if (this._isLowerCase(unit) ||
-          this._isUpperCase(unit) ||
-          this._isNumber(unit)) {
+      if (CodeUnitRange.isLowerCase(unit) ||
+          CodeUnitRange.isUpperCase(unit) ||
+          CodeUnitRange.isNumber(unit)) {
         result = result.replaceAll(char, '');
       }
     }
@@ -73,11 +74,11 @@ class PasswordOperator {
     for (var i = 0; i < this.password.length; i++) {
       var unit = this.password[i].codeUnitAt(0);
 
-      if (this._isLowerCase(unit)) {
+      if (CodeUnitRange.isLowerCase(unit)) {
         result['lowerCase'] = true;
-      } else if (this._isUpperCase(unit)) {
+      } else if (CodeUnitRange.isUpperCase(unit)) {
         result['upperCase'] = true;
-      } else if (this._isNumber(unit)) {
+      } else if (CodeUnitRange.isNumber(unit)) {
         result['number'] = true;
       }
     }
@@ -86,23 +87,6 @@ class PasswordOperator {
       return true;
     }
 
-    return false;
-  }
-
-  bool _isLowerCase(int utf16CodeUnit) {
-    return this._inRange(utf16CodeUnit, 97, 122);
-  }
-
-  bool _isUpperCase(int utf16CodeUnit) {
-    return this._inRange(utf16CodeUnit, 65, 90);
-  }
-
-  bool _isNumber(int utf16CodeUnit) {
-    return this._inRange(utf16CodeUnit, 48, 57);
-  }
-
-  bool _inRange(int target, int lower, int upper) {
-    if (lower <= target && target <= upper) return true;
     return false;
   }
 }
