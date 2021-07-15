@@ -1,4 +1,5 @@
 import 'package:dhak/config/config.dart';
+import 'package:dhak/config/preset.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -7,13 +8,13 @@ void main() {
   group('Normal behavior', () {
     test('Get default preset', () {
       config = Config('./config.json');
-      var preset = config.getPreset('default');
+      var preset = Preset('default', config.doc());
 
       var result = {
-        'presetName': preset.name,
-        'passLen': preset.passLength,
-        'symbols': preset.symbols,
-        'salt': preset.salt
+        'presetName': preset.name(),
+        'passLen': preset.passLength(),
+        'symbols': preset.symbols(),
+        'salt': preset.salt()
       };
       var expected = {
         'presetName': 'default',
