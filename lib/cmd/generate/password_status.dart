@@ -1,9 +1,9 @@
 import 'package:dhak/cmd/generate/code_unit_range.dart';
 
-class PasswordInfo {
+class PasswordStatus {
   final String password;
 
-  PasswordInfo(this.password);
+  PasswordStatus(this.password);
 
   bool hasSymbols() {
     var result = this.password;
