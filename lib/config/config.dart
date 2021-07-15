@@ -11,8 +11,8 @@ class Config {
     this.file = File(path);
 
     if (!this.file.existsSync()) {
-      print('".dhakrc" was not found.');
-      print('Initializing ".dhakrc" now...');
+      print('"$path" was not found.');
+      print('Creating "$path" now...');
       var json = Config._stringConfig();
       this.file.writeAsStringSync(json);
       print('Finished!');
