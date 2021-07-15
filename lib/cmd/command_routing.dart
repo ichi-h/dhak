@@ -46,7 +46,7 @@ class CommandRouting extends Cmd {
 
       default:
         throw DhakArgsException(
-            'Runtime error: There is no command corresponding to option "$option" in dhak.');
+            'Command error: The option command "$option" does not exist.\n');
     }
   }
 }
