@@ -50,7 +50,7 @@ class GenerateCmd extends Cmd {
     final target = this.passPhrase + this.title;
     if (70 < target.length) {
       throw DhakRuntimeException(
-          'Runtime error: dhak does not allow a passphrase and title with the total length of more than 70.');
+          'Runtime error: dhak does not allow the total length of the passphrase and title to be more than 70.');
     }
 
     final config = Config(this.path);
