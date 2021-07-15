@@ -4,7 +4,6 @@ import 'package:dhak/util/global_const.dart';
 class VersionCmd extends Cmd {
   @override
   void run() {
-    var version = GlobalConst.VERSION;
-    print('dhak version $version');
+    print('dhak version ${GlobalConst.VERSION}');
   }
 }
