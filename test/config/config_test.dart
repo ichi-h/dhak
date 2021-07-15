@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dhak/config/config.dart';
 import 'package:dhak/config/preset.dart';
 import 'package:test/test.dart';
@@ -6,6 +8,11 @@ void main() {
   Config config;
 
   group('Normal behavior', () {
+    tearDownAll(() {
+      var file = File('./tool/.dhakrc');
+      file.deleteSync();
+    });
+
     test('Get default preset', () {
       config = Config('./.dhakrc');
       var preset = Preset('default', config.doc());
@@ -24,6 +31,13 @@ void main() {
       };
 
       expect(result, equals(expected));
+    });
+
+    test('When .dhakrc was not found', () {
+      config = Config('./tool/.dhakrc');
+
+      var file = File('./tool/.dhakrc');
+      expect(file.existsSync(), isTrue);
     });
   });
 
