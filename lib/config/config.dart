@@ -1,48 +1,43 @@
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:dhak/config/preset.dart';
-import 'package:dhak/util/dhak_exception.dart';
-import 'package:yaml/yaml.dart';
 
 class Config {
   late final file;
+  late Map<String, dynamic> _doc;
 
-  Config([String path = '~/.dhak/config.yaml']) {
+  Config(String path) {
     this.file = File(path);
-  }
 
-  Preset getPreset(String presetName) {
     if (!this.file.existsSync()) {
-      this._writeConfig();
+      print('"config.json" was not found.');
+      print('Initializing "config.json" now...');
+      var json = Config._stringConfig();
+      this.file.writeAsStringSync(json);
+      print('Finished!');
     }
 
-    final doc = this._getDoc();
-    final preset = doc['presets'][presetName];
-
-    if (preset == null) {
-      throw DhakRuntimeException(
-          'Runtime error: The preset name $presetName was not found.');
-    }
-
-    int passLength = preset['password_length'];
-    String salt = preset['salt'];
-
-    List<dynamic> dynSymbols = preset['symbols'].toList();
-    List<String> symbols = dynSymbols.map((e) => e as String).toList();
-
-    return Preset(presetName, passLength, symbols, salt);
-  }
-
-  dynamic _getDoc() {
     var contents = this.file.readAsStringSync();
-    return loadYaml(contents);
+    this._doc = json.decode(contents);
   }
 
-  void _writeConfig() {
-    print('"config.json" was not found.');
-    print('Initializing "config.json" now...');
-    var yaml = Config._stringConfig();
-    this.file.writeAsStringSync(yaml);
-    print('Finished!');
+  dynamic doc() {
+    return this._doc;
+  }
+
+  void setPresets(Preset preset) {
+    this._doc['presets'][preset.name()] = {
+      'password_length': preset.passLength(),
+      'symbols': preset.symbols(),
+      'salt': preset.salt()
+    };
+  }
+
+  void write() {
+    var encoder = JsonEncoder.withIndent('  ');
+    var contents = encoder.convert(this._doc);
+    this.file.writeAsStringSync(contents);
   }
 
   static String _stringConfig() {
