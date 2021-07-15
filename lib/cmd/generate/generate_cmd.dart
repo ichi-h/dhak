@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dart_clipboard/dart_clipboard.dart';
 import 'package:dbcrypt/dbcrypt.dart';
 import 'package:dhak/cmd/cmd.dart';
@@ -13,9 +15,23 @@ class GenerateCmd extends Cmd {
   final String presetName;
   final String option;
   String passPhrase;
-  String path;
+  late String path;
 
-  GenerateCmd(this.title, this.presetName, this.option, [this.passPhrase = '', this.path = '~/.dhakrc']);
+  GenerateCmd(this.title, this.presetName, this.option,
+      [this.passPhrase = '', this.path = '']) {
+    if (this.path == '') {
+      Map<String, String> env = Platform.environment;
+
+      if (Platform.isWindows) {
+        this.path = '${env['UserProfile']!}/.dhakrc';
+      } else if (Platform.isMacOS || Platform.isLinux) {
+        this.path = '${env['HOME']!}/.dhakrc';
+      } else {
+        throw DhakRuntimeException(
+            'Platform error: "${Platform.operatingSystem}" is not supported.');
+      }
+    }
+  }
 
   @override
   void run() {
