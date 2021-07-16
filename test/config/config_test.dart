@@ -15,7 +15,7 @@ void main() {
 
     test('Get default preset', () {
       config = Config('./.dhakrc');
-      var preset = Preset.newInstance('default', config.doc());
+      var preset = Preset.newInstance('default', config.doc(), 0);
 
       var result = {
         'presetName': preset.name(),
@@ -27,7 +27,7 @@ void main() {
         'presetName': 'default',
         'passLen': 20,
         'symbols': ["/", "#", "%", "&", "@", "+", "-", "_"],
-        'salt': ''
+        'salt': '\$2b\$10\$pbCZ/hEjzP3IO4Z/bTaDBV'
       };
 
       expect(result, equals(expected));
