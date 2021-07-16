@@ -10,7 +10,8 @@ class Preset {
 
   Preset(this._name, this._passLength, this._symbols, this._salt);
 
-  static Preset newInstance(String presetName, Map<String, dynamic> doc, int hashCode) {
+  static Preset newInstance(
+      String presetName, Map<String, dynamic> doc, int hashCode) {
     var name = presetName;
 
     final preset = doc['presets'][presetName];
@@ -40,8 +41,8 @@ class Preset {
     return this._name;
   }
 
-  int passLength() {
-    if (this._passLength < 8) {
+  int passLength(String option) {
+    if (this._passLength < 8 && !option.contains('f')) {
       throw DhakRuntimeException(
           'Preset error: The password length "${this._passLength}" is invalid. '
           'The length must be more than 8.');

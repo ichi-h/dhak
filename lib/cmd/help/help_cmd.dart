@@ -17,8 +17,9 @@ preset:
   The pre-prepared setting for password generation (you can add a preset in ~/.dhakrc).
   If you omit this, the value will be "default".
 option:
-  Specify additional functions as needed.
+  Specify additional functions as needed. The options should be connected like "-df".
     -d: Display the password in the terminal.
+    -f: Generate the password which is less than 8 forcibly.
 ''');
   }
 }

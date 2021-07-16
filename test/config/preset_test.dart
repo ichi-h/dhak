@@ -11,11 +11,6 @@ void main() {
       expect(name, equals('default'));
     });
 
-    test('Get length of generated passwords', () {
-      var len = preset.passLength();
-      expect(len, equals(20));
-    });
-
     test('Get symbols', () {
       var symbols = preset.symbols();
       expect(symbols, equals(['%']));
@@ -24,6 +19,17 @@ void main() {
     test('Get salt', () {
       var salt = preset.salt();
       expect(salt, equals(r'$2b$10$gEFq.t64qSdMqKw3NHR0YO'));
+    });
+
+    test('Get length of generated passwords', () {
+      var len = preset.passLength('');
+      expect(len, equals(20));
+    });
+
+    test('Get length of generated passwords by -f', () {
+      preset = Preset('', 4, [''], '');
+      var len = preset.passLength('-f');
+      expect(len, equals(4));
     });
   });
 
@@ -41,7 +47,7 @@ void main() {
     test('Invalid passLength', () {
       Preset preset = Preset('', 0, [''], '');
       try {
-        preset.passLength();
+        preset.passLength('');
       } on DhakRuntimeException {
         return;
       }

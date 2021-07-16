@@ -19,7 +19,7 @@ void main() {
 
       var result = {
         'presetName': preset.name(),
-        'passLen': preset.passLength(),
+        'passLen': preset.passLength(''),
         'symbols': preset.symbols(),
         'salt': preset.salt()
       };
