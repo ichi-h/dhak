@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dart_clipboard/dart_clipboard.dart';
 import 'package:dbcrypt/dbcrypt.dart';
@@ -64,10 +65,11 @@ class GenerateCmd extends Cmd {
 
     var password = this._genPassword(target, config, preset);
     status = PasswordStatus(password);
-    var i = 0;
+    final rnd = Random(password.hashCode);
     while (!status.isSecure()) {
-      password = this._genPassword('$target$i', config, preset);
-      i++;
+      var num = rnd.nextInt(100);
+      password = this._genPassword('$target$num', config, preset);
+      status = PasswordStatus(password);
     }
 
     final clipboard = Clipboard();
