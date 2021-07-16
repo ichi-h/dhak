@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dhak/cmd/generate/code_unit_range.dart';
+import 'package:dhak/util/code_unit_range.dart';
 import 'package:dhak/util/global_const.dart';
 
 class PasswordOperator {
