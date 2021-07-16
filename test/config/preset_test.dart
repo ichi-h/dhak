@@ -16,12 +16,12 @@ void main() {
       expect(len, equals(20));
     });
 
-    test('Get preset name', () {
+    test('Get symbols', () {
       var symbols = preset.symbols();
       expect(symbols, equals(['%']));
     });
 
-    test('Get preset name', () {
+    test('Get salt', () {
       var salt = preset.salt();
       expect(salt, equals(r'$2b$10$gEFq.t64qSdMqKw3NHR0YO'));
     });
@@ -61,14 +61,14 @@ void main() {
         fail('The invalid algorithm passes the test.');
       });
 
-      test('Invalid stretching length', () {
+      test('Invalid cost', () {
         preset = Preset('', 0, [''], r'$2b$99$gEFq.t64qSdMqKw3NHR0YO');
         try {
           preset.salt();
         } on DhakRuntimeException {
           return;
         }
-        fail('The invalid stretching length passes the test.');
+        fail('The invalid cost passes the test.');
       });
 
       test('Invalid salt', () {
