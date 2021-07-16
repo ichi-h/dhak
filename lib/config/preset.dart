@@ -16,7 +16,7 @@ class Preset {
 
     if (preset == null) {
       throw DhakRuntimeException(
-          'Runtime error: The preset name $presetName was not found.');
+          'Runtime error: The preset name "$presetName" was not found.');
     }
 
     var passLength = preset['password_length'];
@@ -75,10 +75,10 @@ class Preset {
           'Preset error: The unknown algorithm "$algorithm" was found.');
     }
 
-    var stretching = int.parse(saltInfo[2]);
-    if (stretching < 4 || 31 < stretching) {
-      throw DhakRuntimeException(
-          'Preset error: The stretching length must be between 4 and 31.');
+    var cost = int.parse(saltInfo[2]);
+    if (cost < 4 || 31 < cost) {
+      throw DhakRuntimeException('Preset error: The cost "$cost" is invalid.'
+          'It must be between 4 and 31.');
     }
 
     var salt = saltInfo[3];
