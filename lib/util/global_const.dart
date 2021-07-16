@@ -4,7 +4,7 @@ class GlobalConst {
   static final letters = [
     GlobalConst.LOWER_CASE,
     GlobalConst.UPPER_CASE,
-    GlobalConst.NUMBER
+    GlobalConst.NUMBERS
   ].expand((element) => element).toList();
 
   static const LOWER_CASE = [
@@ -65,5 +65,5 @@ class GlobalConst {
     'Z'
   ];
 
-  static const NUMBER = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  static const NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 }
