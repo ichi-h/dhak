@@ -77,13 +77,17 @@ class GenerateCmd extends Cmd {
   }
 
   String _genPassword(String target, Config config, Preset preset) {
-    final bcrypted = DBCrypt().hashpw(target, preset.salt());
     var reversed = '';
-    for (var i = bcrypted.length - 1; 0 < i; i--) {
-      reversed += bcrypted[i];
+    var encrypted = target;
+    var len = preset.passLength();
+    while (reversed.length < len) {
+      encrypted = DBCrypt().hashpw(encrypted, preset.salt());
+      for (var i = encrypted.length - 1; 29 <= i; i--) {
+        reversed += encrypted[i];
+      }
     }
 
-    var password = reversed.substring(0, preset.passLength());
+    var password = reversed.substring(0, len);
 
     final operator = PasswordOperator(password);
     if (preset.symbols().length != 0) {
