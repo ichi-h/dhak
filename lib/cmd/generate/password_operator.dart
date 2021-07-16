@@ -13,8 +13,9 @@ class PasswordOperator {
     final passLen = this.password.length;
 
     // Calculate trials of replacements.
-    // It is adjusted to be from 1 to a quarter of password length.
-    final trials = 1 + rnd.nextInt(passLen) % (passLen / 4).floor();
+    // It is adjusted to be from 1 to one third of password length.
+    var maxTrials = (passLen / 3).round();
+    final trials = 1 + rnd.nextInt(maxTrials) % maxTrials;
 
     var result = this.password;
 
