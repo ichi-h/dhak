@@ -47,6 +47,13 @@ class Preset {
           'Preset error: The password length "${this._passLength}" is invalid. '
           'The length must be more than 8.');
     }
+
+    if (this._passLength < 12) {
+      print(
+          'WARNING: The password length which is "${this._passLength}" is a short. '
+          'It should be more than 12.');
+    }
+
     return this._passLength;
   }
 
