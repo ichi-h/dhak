@@ -54,7 +54,7 @@ class GenerateCmd extends Cmd {
     }
 
     final config = Config(this.path);
-    final preset = Preset(this.presetName, config.doc());
+    final preset = Preset.newInstance(this.presetName, config.doc());
     if (preset.salt() == '') {
       preset.setSalt(DBCrypt().gensalt());
       config.setPresets(preset);

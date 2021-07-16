@@ -8,7 +8,7 @@ void main() {
   group('Normal behavior', () {
     tearDownAll(() {
       var config = Config('./.dhakrc');
-      var preset = Preset('default', config.doc());
+      var preset = Preset.newInstance('default', config.doc());
       preset.setSalt('');
       config.setPresets(preset);
       config.write();

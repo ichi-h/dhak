@@ -15,7 +15,7 @@ void main() {
 
     test('Get default preset', () {
       config = Config('./.dhakrc');
-      var preset = Preset('default', config.doc());
+      var preset = Preset.newInstance('default', config.doc());
 
       var result = {
         'presetName': preset.name(),

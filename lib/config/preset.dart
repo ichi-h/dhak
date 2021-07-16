@@ -7,8 +7,10 @@ class Preset {
   late final List<String> _symbols;
   late String _salt;
 
-  Preset(String presetName, Map<String, dynamic> doc) {
-    this._name = presetName;
+  Preset(this._name, this._passLength, this._symbols, this._salt);
+
+  static Preset newInstance(String presetName, Map<String, dynamic> doc) {
+    var name = presetName;
 
     final preset = doc['presets'][presetName];
 
@@ -17,11 +19,13 @@ class Preset {
           'Runtime error: The preset name $presetName was not found.');
     }
 
-    this._passLength = preset['password_length'];
-    this._salt = preset['salt'];
+    var passLength = preset['password_length'];
+    var salt = preset['salt'];
 
     List<dynamic> dynSymbols = preset['symbols'].toList();
-    this._symbols = dynSymbols.map((e) => e as String).toList();
+    var symbols = dynSymbols.map((e) => e as String).toList();
+
+    return Preset(name, passLength, symbols, salt);
   }
 
   String name() {
