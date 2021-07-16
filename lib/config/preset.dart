@@ -1,3 +1,4 @@
+import 'package:dhak/crypto/gen_salt.dart';
 import 'package:dhak/util/code_unit_range.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
@@ -9,7 +10,7 @@ class Preset {
 
   Preset(this._name, this._passLength, this._symbols, this._salt);
 
-  static Preset newInstance(String presetName, Map<String, dynamic> doc) {
+  static Preset newInstance(String presetName, Map<String, dynamic> doc, int hashCode) {
     var name = presetName;
 
     final preset = doc['presets'][presetName];
@@ -20,7 +21,9 @@ class Preset {
     }
 
     var passLength = preset['password_length'];
-    var salt = preset['salt'];
+    var salt = '\$${preset['algorithm']}' +
+        '\$${preset['cost']}' +
+        '\$${GenSalt.fromHashCode(hashCode)}';
 
     List<dynamic> dynSymbols = preset['symbols'].toList();
     var symbols = dynSymbols.map((e) => e as String).toList();
