@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:crypto/crypto.dart';
 import 'package:dart_clipboard/dart_clipboard.dart';
 import 'package:dbcrypt/dbcrypt.dart';
 import 'package:dhak/cmd/cmd.dart';
@@ -48,11 +50,13 @@ class GenerateCmd extends Cmd {
           'A passphrase should have length of 8 or more and contain at least one lower-case, upper-case and number.\n');
     }
 
-    final target = this.passPhrase + this.title;
-    if (70 < target.length) {
-      throw DhakRuntimeException(
-          'Runtime error: dhak does not allow the total length of the passphrase and title to be more than 70.');
-    }
+    // The countermeasure for the total length with the passphrase and the title
+    // which exceeds 72.
+    // The hash length of SHA512 in strings is 128, so its 56 characters will be
+    // cut down when it is taken as the argument of BCrypt. However, hashing them
+    // will prevent the loss of the two pieces of information.
+    final bytes = utf8.encode(this.passPhrase + this.title);
+    final target = sha512.convert(bytes).toString();
 
     final config = Config(this.path);
     final preset =
@@ -63,7 +67,7 @@ class GenerateCmd extends Cmd {
     final rnd = Random(password.hashCode);
     while (!status.isSecure()) {
       var num = rnd.nextInt(100);
-      password = this._genPassword('$target$num', config, preset);
+      password = this._genPassword('$num$target', config, preset);
       status = PasswordStatus(password);
     }
 
@@ -88,7 +92,6 @@ class GenerateCmd extends Cmd {
     }
 
     var password = reversed.substring(0, len);
-
     final operator = PasswordOperator(password);
     if (preset.symbols().length != 0) {
       password = operator.replaceAtRandomWith(preset.symbols());
