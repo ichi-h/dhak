@@ -1,3 +1,4 @@
+import 'package:dhak/util/code_unit_range.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
 class Preset {
@@ -23,13 +24,66 @@ class Preset {
     this._symbols = dynSymbols.map((e) => e as String).toList();
   }
 
-  String name() => this._name;
+  String name() {
+    if (this._name.startsWith('-')) {
+      throw DhakRuntimeException(
+          'Preset error: The preset name "${this._name}" is invalid. '
+          'You cannot use a name which starts with a hyphen.');
+    }
+    return this._name;
+  }
 
-  int passLength() => this._passLength;
+  int passLength() {
+    if (this._passLength < 8 || 31 < this._passLength) {
+      throw DhakRuntimeException(
+          'Preset error: The password length "${this._passLength}" is invalid. '
+          'The length must be between 8 and 31.');
+    }
+    return this._passLength;
+  }
 
-  List<String> symbols() => this._symbols;
+  List<String> symbols() {
+    return this._symbols.where((symbol) {
+      var unit = symbol.codeUnitAt(0);
+      var status = !CodeUnitRange.isLowerCase(unit) &&
+          !CodeUnitRange.isUpperCase(unit) &&
+          !CodeUnitRange.isNumber(unit);
 
-  String salt() => this._salt;
+      if (!status) {
+        print('Notice: The symbol "$symbol" was ignored.');
+      }
+
+      return status;
+    }).toList();
+  }
+
+  String salt() {
+    if (this._salt == '') return this._salt;
+
+    var saltInfo = this._salt.split(r'$');
+
+    var algorithm = saltInfo[1];
+    if (algorithm != '2' &&
+        algorithm != '2a' &&
+        algorithm != '2y' &&
+        algorithm != '2b') {
+      throw DhakRuntimeException(
+          'Preset error: The unknown algorithm "$algorithm" was found.');
+    }
+
+    var stretching = int.parse(saltInfo[2]);
+    if (stretching < 4 || 31 < stretching) {
+      throw DhakRuntimeException(
+          'Preset error: The stretching length must be between 4 and 31.');
+    }
+
+    var salt = saltInfo[3];
+    if (salt.length != 22) {
+      throw DhakRuntimeException('Preset error: The salt length must be 22.');
+    }
+
+    return this._salt;
+  }
 
   void setSalt(String salt) {
     this._salt = salt;
