@@ -11,7 +11,7 @@ void main(List<String> arguments) {
   final args = checker.checkedArgs();
 
   CommandRouting(args[0], args[1], args[2]).run();
-    // [0] title
-    // [1] preset
-    // [2] option
+  // args[0]: title
+  // args[1]: preset
+  // args[2]: option
 }
