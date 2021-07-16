@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dhak/config/preset.dart';
-
 class Config {
   late final file;
   late Map<String, dynamic> _doc;
@@ -24,20 +22,6 @@ class Config {
 
   dynamic doc() {
     return this._doc;
-  }
-
-  void setPresets(Preset preset) {
-    this._doc['presets'][preset.name()] = {
-      'password_length': preset.passLength(),
-      'symbols': preset.symbols(),
-      'salt': preset.salt()
-    };
-  }
-
-  void write() {
-    var encoder = JsonEncoder.withIndent('  ');
-    var contents = encoder.convert(this._doc);
-    this.file.writeAsStringSync(contents);
   }
 
   static String _stringConfig() {

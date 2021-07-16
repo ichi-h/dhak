@@ -55,13 +55,8 @@ class GenerateCmd extends Cmd {
     }
 
     final config = Config(this.path);
-    final preset = Preset.newInstance(this.presetName, config.doc());
-    if (preset.salt() == '') {
-      preset.setSalt(DBCrypt().gensalt());
-      config.setPresets(preset);
-      config.write();
-      print('Override the salt value of the preset "${this.presetName}".\n');
-    }
+    final preset =
+        Preset.newInstance(this.presetName, config.doc(), target.hashCode);
 
     var password = this._genPassword(target, config, preset);
     status = PasswordStatus(password);
