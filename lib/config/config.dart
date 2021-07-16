@@ -55,7 +55,8 @@ class Config {
         "-",
         "_"
       ],
-      "salt": ""
+      "algorithm": "2b",
+      "cost": "10"
     }
   }
 }''';
