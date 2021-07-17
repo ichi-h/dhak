@@ -18,21 +18,7 @@ class Preset {
     return this._name;
   }
 
-  int passLength([bool force = false]) {
-    if (this._passLength < 8 && !force) {
-      throw DhakRuntimeException(
-          'Preset error: The password length "${this._passLength}" is invalid. '
-          'The length must be more than 8.');
-    }
-
-    if (this._passLength < 12) {
-      print(
-          'WARNING: The length of password is "${this._passLength}", which is short. '
-          'It should be more than 12.');
-    }
-
-    return this._passLength;
-  }
+  int passLength() => this._passLength;
 
   List<String> symbols() {
     return this._symbols.where((symbol) {
@@ -49,26 +35,7 @@ class Preset {
     }).toList();
   }
 
-  String salt() {
-    var saltInfo = this._salt.split(r'$');
-
-    var algorithm = saltInfo[1];
-    if (algorithm != '2' &&
-        algorithm != '2a' &&
-        algorithm != '2y' &&
-        algorithm != '2b') {
-      throw DhakRuntimeException(
-          'Preset error: The unknown algorithm "$algorithm" was found.');
-    }
-
-    var cost = int.parse(saltInfo[2]);
-    if (cost < 4 || 31 < cost) {
-      throw DhakRuntimeException('Preset error: The cost "$cost" is invalid.'
-          'It must be between 4 and 31.');
-    }
-
-    return this._salt;
-  }
+  String salt() => this._salt;
 
   void setSalt(String salt) {
     this._salt = salt;
