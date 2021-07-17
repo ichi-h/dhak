@@ -39,16 +39,21 @@ void main() {
       expect(options.haveDisplay(), isTrue);
     });
 
-    test('passLength() is 20', () {
-      expect(options.passLength(0), equals(20));
-    });
-
     test('algorithm() is "2b"', () {
       expect(options.algorithm('2'), equals('2b'));
     });
 
     test('cost() is "10"', () {
       expect(options.cost('1'), equals('10'));
+    });
+
+    test('passLength() is 20', () {
+      expect(options.passLength(0), equals(20));
+    });
+
+    test('passLength() is 5 by -f', () {
+      options =  Options(['-f', '--len=5']);
+      expect(options.passLength(0), equals(5));
     });
   });
 
