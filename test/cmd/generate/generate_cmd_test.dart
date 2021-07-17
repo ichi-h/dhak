@@ -25,7 +25,7 @@ void main() {
     }
 
     test('When I input the same value, will I get the same password?', () {
-      final args = ['Google', 'default', ''];
+      final args = ['Google', 'default'];
       var result = genPasswords(args);
       if (result[0] != result[1]) {
         fail(
