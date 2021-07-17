@@ -2,7 +2,7 @@ import 'package:dhak/args/option_checker.dart';
 import 'package:dhak/util/code_unit_range.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
-enum _Target { force, display, len, sym, algo, cost }
+enum OptionTarget { force, display, len, sym, algo, cost }
 
 typedef _Callback<T> = T Function(String option);
 
@@ -13,17 +13,23 @@ class Options {
 
   List<String> toList() => this._options;
 
+  bool exist(OptionTarget target) {
+    for (var option in this._options) {
+      if (this._equals(option, target)) return true;
+    }
+    return false;
+  }
+
   bool haveForce() {
-    return this._procMatchedOpt<bool>(_Target.force, false, (opt) => true);
+    return this._procMatchedOpt<bool>(OptionTarget.force, (opt) => true);
   }
 
   bool haveDisplay() {
-    return this._procMatchedOpt<bool>(_Target.display, false, (opt) => true);
+    return this._procMatchedOpt<bool>(OptionTarget.display, (opt) => true);
   }
 
-  int passLength(int defLen) {
-    final lenStr =
-        this._procMatchedOpt<String>(_Target.len, defLen.toString(), (opt) {
+  int passLength() {
+    final lenStr = this._procMatchedOpt<String>(OptionTarget.len, (opt) {
       return opt.replaceAll('--len=', '');
     });
 
@@ -42,8 +48,8 @@ class Options {
     return len;
   }
 
-  List<String> symbols(List<String> defSym) {
-    final sym = this._procMatchedOpt<List<String>>(_Target.sym, defSym, (opt) {
+  List<String> symbols() {
+    final sym = this._procMatchedOpt<List<String>>(OptionTarget.sym, (opt) {
       var symStr = opt.replaceAll('--sym=', '');
       return symStr.split('');
     });
@@ -62,8 +68,8 @@ class Options {
     }).toList();
   }
 
-  String algorithm(String defAlgo) {
-    final algo = this._procMatchedOpt<String>(_Target.algo, defAlgo, (opt) {
+  String algorithm() {
+    final algo = this._procMatchedOpt<String>(OptionTarget.algo, (opt) {
       return opt.replaceAll('--algo=', '');
     });
 
@@ -75,8 +81,8 @@ class Options {
     return algo;
   }
 
-  String cost(String defCost) {
-    final cost = this._procMatchedOpt<String>(_Target.cost, defCost, (opt) {
+  String cost() {
+    final cost = this._procMatchedOpt<String>(OptionTarget.cost, (opt) {
       return opt.replaceAll('--cost=', '');
     });
 
@@ -94,34 +100,34 @@ class Options {
     return cost;
   }
 
-  T _procMatchedOpt<T>(_Target target, T defValue, _Callback<T> callback) {
+  T _procMatchedOpt<T>(OptionTarget target, _Callback<T> callback) {
     for (var opt in this._options) {
       if (this._equals(opt, target)) {
         return callback(opt);
       }
     }
-    return defValue;
+    throw ArgumentError('There is no option matched with "$target".');
   }
 
-  bool _equals(String option, _Target target) {
+  bool _equals(String option, OptionTarget target) {
     var isDouble = option.startsWith('--');
     switch (target) {
-      case _Target.force:
+      case OptionTarget.force:
         return !isDouble && option.contains('f') || option == '--force';
 
-      case _Target.display:
+      case OptionTarget.display:
         return !isDouble && option.contains('d') || option == '--display';
 
-      case _Target.len:
+      case OptionTarget.len:
         return option.contains('--len=');
 
-      case _Target.sym:
+      case OptionTarget.sym:
         return option.contains('--sym=');
 
-      case _Target.algo:
+      case OptionTarget.algo:
         return option.contains('--algo=');
 
-      case _Target.cost:
+      case OptionTarget.cost:
         return option.contains('--cost=');
     }
   }

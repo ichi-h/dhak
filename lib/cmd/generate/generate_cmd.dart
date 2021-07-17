@@ -87,12 +87,21 @@ class GenerateCmd extends Cmd {
   }
 
   String _genPassword(String target, Preset preset) {
-    final defLen = preset.passLength();
-    final len = this.options.passLength(defLen);
+    var len = preset.passLength();
+    if (this.options.exist(OptionTarget.len)) {
+      len = this.options.passLength();
+    }
 
     final defSalt = preset.salt().split('\$');
-    final algo = this.options.algorithm(defSalt[1]);
-    final cost = this.options.cost(defSalt[2]);
+    var algo = defSalt[1];
+    var cost = defSalt[2];
+    if (this.options.exist(OptionTarget.algo)) {
+      algo = this.options.algorithm();
+    }
+    if (this.options.exist(OptionTarget.cost)) {
+      cost = this.options.cost();
+    }
+
     final salt = '\$$algo\$$cost\$${defSalt[3]}';
 
     var reversed = '';
@@ -104,8 +113,10 @@ class GenerateCmd extends Cmd {
       }
     }
 
-    final defSym = preset.symbols();
-    final symbols = this.options.symbols(defSym);
+    var symbols = preset.symbols();
+    if (this.options.exist(OptionTarget.sym)) {
+      symbols = this.options.symbols();
+    }
 
     var password = reversed.substring(0, len);
     final operator = PasswordOperator(password);
