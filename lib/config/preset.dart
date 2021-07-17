@@ -50,8 +50,6 @@ class Preset {
   }
 
   String salt() {
-    if (this._salt == '') return this._salt;
-
     var saltInfo = this._salt.split(r'$');
 
     var algorithm = saltInfo[1];
@@ -67,11 +65,6 @@ class Preset {
     if (cost < 4 || 31 < cost) {
       throw DhakRuntimeException('Preset error: The cost "$cost" is invalid.'
           'It must be between 4 and 31.');
-    }
-
-    var salt = saltInfo[3];
-    if (salt.length != 22) {
-      throw DhakRuntimeException('Preset error: The salt length must be 22.');
     }
 
     return this._salt;

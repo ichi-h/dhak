@@ -76,16 +76,6 @@ void main() {
         }
         fail('The invalid cost passes the test.');
       });
-
-      test('Invalid salt', () {
-        preset = Preset('', 0, [''], r'$2b$10$gEFq.t64qSdMqKw3NH');
-        try {
-          preset.salt();
-        } on DhakRuntimeException {
-          return;
-        }
-        fail('The invalid salt passes the test.');
-      });
     });
   });
 }
