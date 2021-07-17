@@ -73,6 +73,7 @@ void main() {
 
     test('Args: ["GitHub", "default", "-s", "--length=12"]', () {
       args = ['GitHub', 'default', '-s', '--length=12'];
+      sepArgs = new SeparateArgs(args);
       final actual = {
         'title': sepArgs.title(),
         'preset': sepArgs.preset(),
