@@ -1,5 +1,4 @@
 import 'package:dhak/util/code_unit_range.dart';
-import 'package:dhak/util/dhak_exception.dart';
 
 class Preset {
   late final String _name;
@@ -9,14 +8,7 @@ class Preset {
 
   Preset(this._name, this._passLength, this._symbols, this._salt);
 
-  String name() {
-    if (this._name.startsWith('-')) {
-      throw DhakRuntimeException(
-          'Preset error: The preset name "${this._name}" is invalid. '
-          'You cannot use a name which starts with a hyphen.');
-    }
-    return this._name;
-  }
+  String name() => this._name;
 
   int passLength() => this._passLength;
 
