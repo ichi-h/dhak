@@ -6,7 +6,7 @@ class PassLength extends Item<int> {
   PassLength(this._len);
 
   @override
-  int value() {
+  int value([bool force = false]) {
     // TODO: implement value
     throw UnimplementedError();
   }
