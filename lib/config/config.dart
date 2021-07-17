@@ -34,18 +34,17 @@ class Config {
     int? passLength = preset['password_length'];
     passLength ??= 20;
 
-    String? algorithm = preset['algorithm'];
-    String? cost = preset['cost'];
-    algorithm ??= '2b';
-    cost ??= '10';
-    var salt =
-        '\$$algorithm' + '\$$cost' + '\$${GenSalt.fromHashCode(hashCode)}';
-
     String? symStr = preset['symbols'];
     symStr ??= '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~';
     var symbols = symStr.split('');
 
-    return Preset(presetName, passLength, symbols, salt);
+    String? algo = preset['algorithm'];
+    String? cost = preset['cost'];
+    algo ??= '2b';
+    cost ??= '10';
+    var salt = GenSalt.fromHashCode(hashCode);
+
+    return Preset(presetName, passLength, symbols, algo, cost, salt);
   }
 
   static String _stringConfig() {
