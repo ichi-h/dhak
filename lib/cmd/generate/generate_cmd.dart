@@ -52,11 +52,11 @@ class GenerateCmd extends Cmd {
 
     // The countermeasure for the total length with the passphrase and the title
     // which exceeds 72.
-    // The hash length of SHA512 in strings is 128, so its 56 characters will be
-    // cut down when it is taken as the argument of BCrypt. However, hashing them
-    // will prevent the loss of the two pieces of information.
+    // The hash length of SHA512 in bytes is 64, so it will never exceed the Bcrypt
+    // byte limit.
     final bytes = utf8.encode(this.passPhrase + this.title);
-    final target = sha512.convert(bytes).toString();
+    final hash = sha512.convert(bytes).bytes;
+    final target = String.fromCharCodes(hash);
 
     final config = Config(this.path);
     final preset =
