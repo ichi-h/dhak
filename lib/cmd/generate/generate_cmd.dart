@@ -68,12 +68,12 @@ class GenerateCmd extends Cmd {
     final config = Config(this.path);
     final preset = config.getPreset(this.presetName, target.hashCode);
 
-    var password = this._genPassword(target, config, preset);
+    var password = this._genPassword(target, preset);
     status = PasswordStatus(password);
     final rnd = Random(password.hashCode);
     while (!status.isSecure(this.options.haveForce())) {
       var num = rnd.nextInt(100);
-      password = this._genPassword('$num$target', config, preset);
+      password = this._genPassword('$num$target', preset);
       status = PasswordStatus(password);
     }
 
@@ -86,12 +86,19 @@ class GenerateCmd extends Cmd {
     }
   }
 
-  String _genPassword(String target, Config config, Preset preset) {
+  String _genPassword(String target, Preset preset) {
+    final defLen = preset.passLength();
+    final len = this.options.passLength(defLen);
+
+    final defSalt = preset.salt().split('\$');
+    final algo = this.options.algorithm(defSalt[1]);
+    final cost = this.options.cost(defSalt[2]);
+    final salt = '\$$algo\$$cost\$${defSalt[3]}';
+
     var reversed = '';
     var encrypted = target;
-    var len = preset.passLength(this.options.haveForce());
     while (reversed.length < len) {
-      encrypted = DBCrypt().hashpw(encrypted, preset.salt());
+      encrypted = DBCrypt().hashpw(encrypted, salt);
       for (var i = encrypted.length - 1; 29 <= i; i--) {
         reversed += encrypted[i];
       }
