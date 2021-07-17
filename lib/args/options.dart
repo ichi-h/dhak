@@ -1,4 +1,8 @@
 import 'package:dhak/args/option_checker.dart';
+import 'package:dhak/items_for_gen_pass/algorithm.dart';
+import 'package:dhak/items_for_gen_pass/cost.dart';
+import 'package:dhak/items_for_gen_pass/pass_length.dart';
+import 'package:dhak/items_for_gen_pass/symbols.dart';
 import 'package:dhak/util/code_unit_range.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
@@ -28,7 +32,7 @@ class Options {
     return this._procMatchedOpt<bool>(OptionTarget.display, (opt) => true);
   }
 
-  int passLength() {
+  PassLength passLength() {
     final lenStr = this._procMatchedOpt<String>(OptionTarget.len, (opt) {
       return opt.replaceAll('--len=', '');
     });
@@ -45,16 +49,16 @@ class Options {
           'The length must be more than 8.');
     }
 
-    return len;
+    return PassLength(len);
   }
 
-  List<String> symbols() {
-    final sym = this._procMatchedOpt<List<String>>(OptionTarget.sym, (opt) {
+  Symbols symbols() {
+    var sym = this._procMatchedOpt<List<String>>(OptionTarget.sym, (opt) {
       var symStr = opt.replaceAll('--sym=', '');
       return symStr.split('');
     });
 
-    return sym.where((symbol) {
+    sym = sym.where((symbol) {
       var unit = symbol.codeUnitAt(0);
       var status = !CodeUnitRange.isLowerCase(unit) &&
           !CodeUnitRange.isUpperCase(unit) &&
@@ -66,9 +70,11 @@ class Options {
 
       return status;
     }).toList();
+    
+    return Symbols(sym);
   }
 
-  String algorithm() {
+  Algorithm algorithm() {
     final algo = this._procMatchedOpt<String>(OptionTarget.algo, (opt) {
       return opt.replaceAll('--algo=', '');
     });
@@ -78,10 +84,10 @@ class Options {
           'Preset error: The unknown algorithm "$algo" was found.');
     }
 
-    return algo;
+    return Algorithm(algo);
   }
 
-  String cost() {
+  Cost cost() {
     final cost = this._procMatchedOpt<String>(OptionTarget.cost, (opt) {
       return opt.replaceAll('--cost=', '');
     });
@@ -97,7 +103,7 @@ class Options {
           'It must be between 4 and 31.');
     }
 
-    return cost;
+    return Cost(cost);
   }
 
   T _procMatchedOpt<T>(OptionTarget target, _Callback<T> callback) {
