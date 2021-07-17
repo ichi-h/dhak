@@ -36,5 +36,14 @@ void main() {
             'Different passwords have been generated under the same conditions.');
       }
     });
+
+    test('Generate password with "empty" preset', () {
+      final args = ['Google', 'empty', '-f'];
+      var result = genPasswords(args);
+      if (result[0] != result[1]) {
+        fail(
+            'Different passwords have been generated under the same conditions.');
+      }
+    });
   });
 }
