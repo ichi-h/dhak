@@ -1,4 +1,3 @@
-import 'package:dhak/crypto/gen_salt.dart';
 import 'package:dhak/util/code_unit_range.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
@@ -9,33 +8,6 @@ class Preset {
   late String _salt;
 
   Preset(this._name, this._passLength, this._symbols, this._salt);
-
-  static Preset newInstance(
-      String presetName, Map<String, dynamic> doc, int hashCode) {
-    var name = presetName;
-
-    final preset = doc['presets'][presetName];
-    if (preset == null) {
-      throw DhakRuntimeException(
-          'Runtime error: The preset name "$presetName" was not found.');
-    }
-
-    int? passLength = preset['password_length'];
-    passLength ??= 20;
-
-    String? algorithm = preset['algorithm'];
-    String? cost = preset['cost'];
-    algorithm ??= '2b';
-    cost ??= '10';
-    var salt =
-        '\$$algorithm' + '\$$cost' + '\$${GenSalt.fromHashCode(hashCode)}';
-
-    String? symStr = preset['symbols'];
-    symStr ??= '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~';
-    var symbols = symStr.split('');
-
-    return Preset(name, passLength, symbols, salt);
-  }
 
   String name() {
     if (this._name.startsWith('-')) {

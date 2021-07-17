@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dhak/config/config.dart';
-import 'package:dhak/config/preset.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -15,7 +14,7 @@ void main() {
 
     test('Get default preset', () {
       config = Config('./.dhakrc');
-      var preset = Preset.newInstance('default', config.doc(), 0);
+      var preset = config.getPreset('default', 0);
 
       var result = {
         'presetName': preset.name(),

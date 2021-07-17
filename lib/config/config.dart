@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dhak/config/preset.dart';
+import 'package:dhak/crypto/gen_salt.dart';
+import 'package:dhak/util/dhak_exception.dart';
+
 class Config {
   late final file;
   late Map<String, dynamic> _doc;
@@ -20,8 +24,28 @@ class Config {
     this._doc = json.decode(contents);
   }
 
-  dynamic doc() {
-    return this._doc;
+  Preset getPreset(String presetName, int hashCode) {
+    final preset = this._doc['presets'][presetName];
+    if (preset == null) {
+      throw DhakRuntimeException(
+          'Runtime error: The preset name "$presetName" was not found.');
+    }
+
+    int? passLength = preset['password_length'];
+    passLength ??= 20;
+
+    String? algorithm = preset['algorithm'];
+    String? cost = preset['cost'];
+    algorithm ??= '2b';
+    cost ??= '10';
+    var salt =
+        '\$$algorithm' + '\$$cost' + '\$${GenSalt.fromHashCode(hashCode)}';
+
+    String? symStr = preset['symbols'];
+    symStr ??= '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~';
+    var symbols = symStr.split('');
+
+    return Preset(presetName, passLength, symbols, salt);
   }
 
   static String _stringConfig() {
