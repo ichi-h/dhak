@@ -104,10 +104,13 @@ class GenerateCmd extends Cmd {
       }
     }
 
+    final defSym = preset.symbols();
+    final symbols = this.options.symbols(defSym);
+
     var password = reversed.substring(0, len);
     final operator = PasswordOperator(password);
-    if (preset.symbols().length != 0) {
-      password = operator.replaceAtRandomWith(preset.symbols());
+    if (symbols.length != 0) {
+      password = operator.replaceAtRandomWith(symbols);
     } else {
       password = operator.replaceSymbols();
     }

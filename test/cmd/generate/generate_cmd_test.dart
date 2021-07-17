@@ -12,8 +12,7 @@ void main() {
       final title = sepArgs.title();
       final preset = sepArgs.preset();
       final options = sepArgs.options();
-      final gen =
-        GenerateCmd(title, preset, options, passPhrase, './.dhakrc');
+      final gen = GenerateCmd(title, preset, options, passPhrase, './.dhakrc');
 
       var result = ['', ''];
       for (var i = 0; i < 2; i++) {
@@ -52,7 +51,14 @@ void main() {
     });
 
     test('Generate password by option settings', () {
-      final args = ['Google', '--len=5', '--algo=2', '--cost=04', '-f'];
+      final args = [
+        'Google',
+        '--len=5',
+        '--sym=\$%p^-@',
+        '--algo=2',
+        '--cost=04',
+        '-f'
+      ];
       var result = genPasswords(args);
       if (result[0] != result[1]) {
         fail(

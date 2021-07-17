@@ -1,7 +1,8 @@
 import 'package:dhak/args/option_checker.dart';
+import 'package:dhak/util/code_unit_range.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
-enum _Target { force, display, passLength, algo, cost }
+enum _Target { force, display, len, sym, algo, cost }
 
 typedef _Callback<T> = T Function(String option);
 
@@ -21,8 +22,8 @@ class Options {
   }
 
   int passLength(int defLen) {
-    final lenStr = this
-        ._procMatchedOpt<String>(_Target.passLength, defLen.toString(), (opt) {
+    final lenStr =
+        this._procMatchedOpt<String>(_Target.len, defLen.toString(), (opt) {
       return opt.replaceAll('--len=', '');
     });
 
@@ -39,6 +40,26 @@ class Options {
     }
 
     return len;
+  }
+
+  List<String> symbols(List<String> defSym) {
+    final sym = this._procMatchedOpt<List<String>>(_Target.sym, defSym, (opt) {
+      var symStr = opt.replaceAll('--sym=', '');
+      return symStr.split('');
+    });
+
+    return sym.where((symbol) {
+      var unit = symbol.codeUnitAt(0);
+      var status = !CodeUnitRange.isLowerCase(unit) &&
+          !CodeUnitRange.isUpperCase(unit) &&
+          !CodeUnitRange.isNumber(unit);
+
+      if (!status) {
+        print('Notice: The symbol "$symbol" was ignored.');
+      }
+
+      return status;
+    }).toList();
   }
 
   String algorithm(String defAlgo) {
@@ -91,8 +112,11 @@ class Options {
       case _Target.display:
         return !isDouble && option.contains('d') || option == '--display';
 
-      case _Target.passLength:
+      case _Target.len:
         return option.contains('--len=');
+
+      case _Target.sym:
+        return option.contains('--sym=');
 
       case _Target.algo:
         return option.contains('--algo=');
