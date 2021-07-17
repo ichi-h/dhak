@@ -50,5 +50,14 @@ void main() {
             'Different passwords have been generated under the same conditions.');
       }
     });
+
+    test('Generate password by option settings', () {
+      final args = ['Google', '--len=5', '--algo=2', '--cost=04', '-f'];
+      var result = genPasswords(args);
+      if (result[0] != result[1]) {
+        fail(
+            'Different passwords have been generated under the same conditions.');
+      }
+    });
   });
 }
