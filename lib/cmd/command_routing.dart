@@ -7,16 +7,16 @@ import 'package:dhak/util/dhak_exception.dart';
 class CommandRouting extends Cmd {
   late final String title;
   late final String preset;
-  late final String option;
+  late final List<String> options;
 
-  CommandRouting(this.title, this.preset, this.option);
+  CommandRouting(this.title, this.preset, this.options);
 
   void run() {
     try {
       this._runCmd();
     } on DhakArgsException catch (e) {
       print(e.message);
-      CommandRouting('', '', '--help').run();
+      CommandRouting('', '', ['--help']).run();
     } on DhakRuntimeException catch (e) {
       print(e.message);
     }
@@ -28,14 +28,14 @@ class CommandRouting extends Cmd {
     if (this.title == '') {
       cmd = this._optionCommand();
     } else {
-      cmd = GenerateCmd(this.title, this.preset, this.option);
+      cmd = GenerateCmd(this.title, this.preset, this.options);
     }
 
     cmd.run();
   }
 
   Cmd _optionCommand() {
-    switch (this.option) {
+    switch (this.options[0]) {
       case '-h':
       case '--help':
         return HelpCmd();
@@ -46,7 +46,7 @@ class CommandRouting extends Cmd {
 
       default:
         throw DhakArgsException(
-            'Command error: The option command "$option" does not exist.\n');
+            'Command error: The option command "${this.options[0]}" does not exist.\n');
     }
   }
 }

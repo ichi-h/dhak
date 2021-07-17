@@ -1,15 +1,17 @@
 class Options {
-  final List<String> options;
+  final List<String> _options;
 
-  Options(this.options);
+  Options(this._options);
 
-  bool hasForce() {}
+  bool haveForce() => true;
 
-  bool hasDisplay() {}
+  bool haveDisplay() => true;
 
-  int passLength() {}
+  int passLength() => 0;
 
-  String algorithm() {}
+  String algorithm() => '';
 
-  String cost() {}
+  String cost() => '';
+
+  List<String> toList() => this._options;
 }

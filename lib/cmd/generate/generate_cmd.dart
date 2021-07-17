@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:crypto/crypto.dart';
 import 'package:dart_clipboard/dart_clipboard.dart';
 import 'package:dbcrypt/dbcrypt.dart';
+import 'package:dhak/args/options.dart';
 import 'package:dhak/cmd/cmd.dart';
 import 'package:dhak/cmd/generate/password_operator.dart';
 import 'package:dhak/cmd/generate/password_status.dart';
@@ -14,14 +15,17 @@ import 'package:dhak/util/dhak_exception.dart';
 import 'package:dhak/util/hidden_input.dart';
 
 class GenerateCmd extends Cmd {
-  final String title;
-  final String presetName;
-  final String option;
-  String passPhrase;
+  late final String title;
+  late final String presetName;
+  late final Options options;
+  late String passPhrase;
   late String path;
 
-  GenerateCmd(this.title, this.presetName, this.option,
-      [this.passPhrase = '', this.path = '']) {
+  GenerateCmd(String title, String presetName, List<String> optionList, [String passPhrase = '', String path = '']) {
+    this.title = title;
+    this.presetName = presetName;
+    this.options = Options(optionList);
+
     if (this.path == '') {
       Map<String, String> env = Platform.environment;
 
@@ -64,7 +68,7 @@ class GenerateCmd extends Cmd {
     var password = this._genPassword(target, config, preset);
     status = PasswordStatus(password);
     final rnd = Random(password.hashCode);
-    while (!status.isSecure(this.option.contains('f'))) {
+    while (!status.isSecure(this.options.haveForce())) {
       var num = rnd.nextInt(100);
       password = this._genPassword('$num$target', config, preset);
       status = PasswordStatus(password);
@@ -74,7 +78,7 @@ class GenerateCmd extends Cmd {
     clipboard.setContents(password);
 
     print('Password was copied to clipboard!');
-    if (this.option.contains('d')) {
+    if (this.options.haveDisplay()) {
       print('Password: $password');
     }
   }
@@ -82,7 +86,7 @@ class GenerateCmd extends Cmd {
   String _genPassword(String target, Config config, Preset preset) {
     var reversed = '';
     var encrypted = target;
-    var len = preset.passLength(this.option.contains('f'));
+    var len = preset.passLength(this.options.haveForce());
     while (reversed.length < len) {
       encrypted = DBCrypt().hashpw(encrypted, preset.salt());
       for (var i = encrypted.length - 1; 29 <= i; i--) {
