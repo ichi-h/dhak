@@ -1,13 +1,13 @@
 import 'package:dhak/util/dhak_exception.dart' show DhakArgsException;
-import 'package:dhak/args/args_info.dart';
+import 'package:dhak/args/args_status.dart';
 
 class SyntaxChecker {
   late final List<String> args;
-  late final ArgsInfo _procArgs;
+  late final ArgsStatus _procArgs;
 
   SyntaxChecker(List<String> args) {
     this.args = args;
-    this._procArgs = new ArgsInfo(args);
+    this._procArgs = new ArgsStatus(args);
   }
 
   List<String> checkedArgs() {
