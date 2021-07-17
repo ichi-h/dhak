@@ -1,83 +1,107 @@
 import 'package:test/test.dart';
-import 'package:dhak/args/syntax_checker.dart' show SyntaxChecker;
+import 'package:dhak/args/separate_args.dart';
 import 'package:dhak/util/dhak_exception.dart' show DhakArgsException;
 
 void main() {
   group('Normal behavior', () {
     var args;
-    SyntaxChecker checker;
+    SeparateArgs sepArgs;
 
     test('Args: ["-h"]', () {
       args = ['-h'];
-      checker = new SyntaxChecker(args);
-      final actual = checker.checkedArgs();
-      final expected = ['', '', '-h'];
+      sepArgs = new SeparateArgs(args);
+      final actual = {
+        'title': sepArgs.title(),
+        'preset': sepArgs.preset(),
+        'options': sepArgs.options()
+      };
+      final expected = {
+        'title': '',
+        'preset': '',
+        'options': ['-h']
+      };
       expect(actual, equals(expected));
     });
 
     test('Args: ["GitHub"]', () {
       args = ['GitHub'];
-      checker = new SyntaxChecker(args);
-      final actual = checker.checkedArgs();
-      final expected = ['GitHub', 'default', ''];
+      sepArgs = new SeparateArgs(args);
+      final actual = {
+        'title': sepArgs.title(),
+        'preset': sepArgs.preset(),
+        'options': sepArgs.options()
+      };
+      final expected = {
+        'title': 'GitHub',
+        'preset': 'default',
+        'options': ['']
+      };
       expect(actual, equals(expected));
     });
 
     test('Args: ["GitHub", "default"]', () {
       args = ['GitHub', 'default'];
-      checker = new SyntaxChecker(args);
-      final actual = checker.checkedArgs();
-      final expected = ['GitHub', 'default', ''];
+      sepArgs = new SeparateArgs(args);
+      final actual = {
+        'title': sepArgs.title(),
+        'preset': sepArgs.preset(),
+        'options': sepArgs.options()
+      };
+      final expected = {
+        'title': 'GitHub',
+        'preset': 'default',
+        'options': ['']
+      };
       expect(actual, equals(expected));
     });
 
-    test('Args: ["GitHub", "-s"]', () {
-      args = ['GitHub', '-s'];
-      checker = new SyntaxChecker(args);
-      final actual = checker.checkedArgs();
-      final expected = ['GitHub', 'default', '-s'];
+    test('Args: ["GitHub", "-d"]', () {
+      args = ['GitHub', '-d'];
+      sepArgs = new SeparateArgs(args);
+      final actual = {
+        'title': sepArgs.title(),
+        'preset': sepArgs.preset(),
+        'options': sepArgs.options()
+      };
+      final expected = {
+        'title': 'GitHub',
+        'preset': 'default',
+        'options': ['-d']
+      };
       expect(actual, equals(expected));
     });
 
-    test('Args: ["GitHub", "default", "-s"]', () {
-      args = ['GitHub', 'default', '-s'];
-      checker = new SyntaxChecker(args);
-      final actual = checker.checkedArgs();
-      expect(actual, equals(args));
+    test('Args: ["GitHub", "default", "-s", "--length=12"]', () {
+      args = ['GitHub', 'default', '-s', '--length=12'];
+      final actual = {
+        'title': sepArgs.title(),
+        'preset': sepArgs.preset(),
+        'options': sepArgs.options()
+      };
+      final expected = {
+        'title': 'GitHub',
+        'preset': 'default',
+        'options': ['-s', '--length=12']
+      };
+      expect(actual, equals(expected));
     });
   });
 
   group('Abnormal behavior', () {
     var args;
-    SyntaxChecker checker;
+    SeparateArgs sepArgs;
 
-    test('Args: ["-s", "GitHub"]', () {
-      args = ['-s', 'GitHub'];
-      checker = new SyntaxChecker(args);
-      try {
-        checker.check();
-      } on DhakArgsException {
-        return;
-      }
-      fail('The command-line with syntax error passes the test.');
-    });
-
-    test('Args: ["-s", "GitHub", "default"]', () {
-      args = ['-s', 'GitHub', 'default'];
-      checker = new SyntaxChecker(args);
-      try {
-        checker.check();
-      } on DhakArgsException {
-        return;
-      }
-      fail('The command-line with syntax error passes the test.');
-    });
+    void check(SeparateArgs sepArgs) {
+      sepArgs.title();
+      sepArgs.preset();
+      sepArgs.options();
+    }
 
     test('Args: ["GitHub", "-s", "default"]', () {
       args = ['GitHub', '-s', 'default'];
-      checker = new SyntaxChecker(args);
+      sepArgs = new SeparateArgs(args);
       try {
-        checker.check();
+        check(sepArgs);
       } on DhakArgsException {
         return;
       }
@@ -86,20 +110,20 @@ void main() {
 
     test('Args: ["GitHub", "default", "foo"]', () {
       args = ['GitHub', 'default', 'foo'];
-      checker = new SyntaxChecker(args);
+      sepArgs = new SeparateArgs(args);
       try {
-        checker.check();
+        check(sepArgs);
       } on DhakArgsException {
         return;
       }
       fail('The command-line with syntax error passes the test.');
     });
 
-    test('Args: ["GitHub", "-s", "default", "foo"]', () {
-      args = ['GitHub', '-s', 'default', 'foo'];
-      checker = new SyntaxChecker(args);
+    test('Args: ["GitHub", "default", "foo", "-s"]', () {
+      args = ['GitHub', 'default', 'foo', '-s'];
+      sepArgs = new SeparateArgs(args);
       try {
-        checker.check();
+        check(sepArgs);
       } on DhakArgsException {
         return;
       }
