@@ -65,7 +65,7 @@ class Options {
     }
 
     int costInt = int.parse(cost);
-    if (OptionChecker.isValidCost(costInt)) {
+    if (!OptionChecker.isValidCost(costInt)) {
       throw DhakRuntimeException('Preset error: The cost "$cost" is invalid.'
           'It must be between 4 and 31.');
     }

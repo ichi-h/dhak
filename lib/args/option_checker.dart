@@ -23,10 +23,10 @@ class OptionChecker {
   }
 
   static bool isValidAlgo(String algo) {
-    return algo != '2' && algo != '2a' && algo != '2y' && algo != '2b';
+    return algo == '2' || algo == '2a' || algo == '2y' || algo == '2b';
   }
 
   static bool isValidCost(int cost) {
-    return cost < 4 || 31 < cost;
+    return 4 <= cost && cost <= 31;
   }
 }
