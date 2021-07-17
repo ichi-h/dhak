@@ -50,7 +50,7 @@ class Preset {
 
     if (this._passLength < 12) {
       print(
-          'WARNING: The password length which is "${this._passLength}" is a short. '
+          'WARNING: The length of password is "${this._passLength}", which is short. '
           'It should be more than 12.');
     }
 
