@@ -1,4 +1,4 @@
-import 'package:dhak/args/syntax_checker.dart';
+import 'package:dhak/args/separate_args.dart';
 import 'package:dhak/cmd/command_routing.dart';
 
 void main(List<String> arguments) {
@@ -6,12 +6,10 @@ void main(List<String> arguments) {
     arguments = ['', '', '--help'];
   }
 
-  final checker = SyntaxChecker(arguments);
+  final sepArgs = SeparateArgs(arguments);
+  final title = sepArgs.title();
+  final preset = sepArgs.preset();
+  final options = sepArgs.options();
 
-  final args = checker.checkedArgs();
-
-  CommandRouting(args[0], args[1], args[2]).run();
-  // args[0]: title
-  // args[1]: preset
-  // args[2]: option
+  CommandRouting(title, preset, options).run();
 }
