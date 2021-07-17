@@ -24,7 +24,9 @@ class PasswordStatus {
     return false;
   }
 
-  bool isSecure() {
+  bool isSecure([bool force = false]) {
+    if (force) return true;
+
     var result = {'lowerCase': false, 'upperCase': false, 'number': false};
 
     if (this.password.length < 8) return false;

@@ -22,13 +22,13 @@ void main() {
     });
 
     test('Get length of generated passwords', () {
-      var len = preset.passLength('');
+      var len = preset.passLength();
       expect(len, equals(20));
     });
 
     test('Get length of generated passwords by -f', () {
       preset = Preset('', 4, [''], '');
-      var len = preset.passLength('-f');
+      var len = preset.passLength(true);
       expect(len, equals(4));
     });
   });
@@ -47,7 +47,7 @@ void main() {
     test('Invalid passLength', () {
       Preset preset = Preset('', 0, [''], '');
       try {
-        preset.passLength('');
+        preset.passLength();
       } on DhakRuntimeException {
         return;
       }

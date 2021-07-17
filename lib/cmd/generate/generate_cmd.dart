@@ -65,7 +65,7 @@ class GenerateCmd extends Cmd {
     var password = this._genPassword(target, config, preset);
     status = PasswordStatus(password);
     final rnd = Random(password.hashCode);
-    while (!status.isSecure()) {
+    while (!status.isSecure(this.option.contains('f'))) {
       var num = rnd.nextInt(100);
       password = this._genPassword('$num$target', config, preset);
       status = PasswordStatus(password);
@@ -83,7 +83,7 @@ class GenerateCmd extends Cmd {
   String _genPassword(String target, Config config, Preset preset) {
     var reversed = '';
     var encrypted = target;
-    var len = preset.passLength(this.option);
+    var len = preset.passLength(this.option.contains('f'));
     while (reversed.length < len) {
       encrypted = DBCrypt().hashpw(encrypted, preset.salt());
       for (var i = encrypted.length - 1; 29 <= i; i--) {

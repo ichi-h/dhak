@@ -41,8 +41,8 @@ class Preset {
     return this._name;
   }
 
-  int passLength(String option) {
-    if (this._passLength < 8 && !option.contains('f')) {
+  int passLength([bool force = false]) {
+    if (this._passLength < 8 && !force) {
       throw DhakRuntimeException(
           'Preset error: The password length "${this._passLength}" is invalid. '
           'The length must be more than 8.');
