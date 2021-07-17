@@ -15,19 +15,24 @@ class Preset {
     var name = presetName;
 
     final preset = doc['presets'][presetName];
-
     if (preset == null) {
       throw DhakRuntimeException(
           'Runtime error: The preset name "$presetName" was not found.');
     }
 
-    var passLength = preset['password_length'];
-    var salt = '\$${preset['algorithm']}' +
-        '\$${preset['cost']}' +
-        '\$${GenSalt.fromHashCode(hashCode)}';
+    int? passLength = preset['password_length'];
+    passLength ??= 20;
 
-    List<dynamic> dynSymbols = preset['symbols'].toList();
-    var symbols = dynSymbols.map((e) => e as String).toList();
+    String? algorithm = preset['algorithm'];
+    String? cost = preset['cost'];
+    algorithm ??= '2b';
+    cost ??= '10';
+    var salt =
+        '\$$algorithm' + '\$$cost' + '\$${GenSalt.fromHashCode(hashCode)}';
+
+    String? symStr = preset['symbols'];
+    symStr ??= '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~';
+    var symbols = symStr.split('');
 
     return Preset(name, passLength, symbols, salt);
   }

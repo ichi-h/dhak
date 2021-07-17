@@ -26,7 +26,7 @@ void main() {
       var expected = {
         'presetName': 'default',
         'passLen': 20,
-        'symbols': ["/", "#", "%", "&", "@", "+", "-", "_"],
+        'symbols': '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~'.split(''),
         'salt': '\$2b\$10\$pbCZ/hEjzP3IO4Z/bTaDBV'
       };
 

@@ -29,16 +29,7 @@ class Config {
   "presets": {
     "default": {
       "password_length": 20,
-      "symbols": [
-        "/",
-        "#",
-        "%",
-        "&",
-        "@",
-        "+",
-        "-",
-        "_"
-      ],
+      "symbols": "!\"#$%&‘()*+,-./:;<=>?@[\\}^_`{|}~",
       "algorithm": "2b",
       "cost": "10"
     }
