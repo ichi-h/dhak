@@ -8,7 +8,8 @@ class Symbols extends Item<List<String>> {
 
   @override
   List<String> value() {
-    var symbols = this._sym.split('');
+    // toSet() is measure for duplication of symbols
+    var symbols = this._sym.split('').toSet();
 
     return symbols.where((symbol) {
       var unit = symbol.codeUnitAt(0);
