@@ -1,16 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:dart_clipboard/dart_clipboard.dart';
-import 'package:dbcrypt/dbcrypt.dart';
 import 'package:dhak/args/options.dart';
 import 'package:dhak/cmd/cmd.dart';
-import 'package:dhak/cmd/generate/password_operator.dart';
+import 'package:dhak/cmd/generate/password_gen.dart';
 import 'package:dhak/cmd/generate/password_status.dart';
 import 'package:dhak/config/config.dart';
-import 'package:dhak/config/preset.dart';
 import 'package:dhak/util/dhak_exception.dart';
 import 'package:dhak/util/hidden_input.dart';
 
@@ -68,16 +65,8 @@ class GenerateCmd extends Cmd {
     final config = Config(this.path);
     final preset = config.getPreset(this.presetName, target.hashCode);
 
-    var force = this.options.haveForce();
-    var password = this._genPassword(target, preset, force);
-
-    final rnd = Random(password.hashCode);
-    status = PasswordStatus(password);
-    while (!status.isSecure(force)) {
-      var num = rnd.nextInt(100);
-      password = this._genPassword('$num$target', preset, force);
-      status = PasswordStatus(password);
-    }
+    var passGen = PasswordGen(target, preset, this.options);
+    var password = passGen.getPassword();
 
     final clipboard = Clipboard();
     clipboard.setContents(password);
@@ -86,47 +75,5 @@ class GenerateCmd extends Cmd {
     if (this.options.haveDisplay()) {
       print('Password: $password');
     }
-  }
-
-  String _genPassword(String target, Preset preset, bool force) {
-    var len = preset.passLength().value(force);
-    if (this.options.exist(OptionTarget.len)) {
-      len = this.options.passLength().value(force);
-    }
-
-    var algo = preset.algorithm().value();
-    var cost = preset.cost().value();
-    if (this.options.exist(OptionTarget.algo)) {
-      algo = this.options.algorithm().value();
-    }
-    if (this.options.exist(OptionTarget.cost)) {
-      cost = this.options.cost().value();
-    }
-
-    final salt = '\$$algo\$$cost\$${preset.salt()}';
-
-    var reversed = '';
-    var encrypted = target;
-    while (reversed.length < len) {
-      encrypted = DBCrypt().hashpw(encrypted, salt);
-      for (var i = encrypted.length - 1; 29 <= i; i--) {
-        reversed += encrypted[i];
-      }
-    }
-
-    var symbols = preset.symbols().value();
-    if (this.options.exist(OptionTarget.sym)) {
-      symbols = this.options.symbols().value();
-    }
-
-    var password = reversed.substring(0, len);
-    final operator = PasswordOperator(password);
-    if (symbols.length != 0) {
-      password = operator.replaceAtRandomWith(symbols);
-    } else {
-      password = operator.replaceSymbols();
-    }
-
-    return password;
   }
 }
