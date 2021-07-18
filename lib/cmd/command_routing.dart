@@ -48,7 +48,7 @@ class CommandRouting extends Cmd {
 
       default:
         throw DhakArgsException(
-            'Command error: The option command "${this.options[0]}" does not exist.\n');
+            'Command error: The command "${this.options[0]}" does not exist.\n');
     }
   }
 }
