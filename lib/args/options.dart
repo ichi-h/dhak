@@ -1,10 +1,7 @@
-import 'package:dhak/items_for_gen_pass/item_checker.dart';
 import 'package:dhak/items_for_gen_pass/algorithm.dart';
 import 'package:dhak/items_for_gen_pass/cost.dart';
 import 'package:dhak/items_for_gen_pass/pass_length.dart';
 import 'package:dhak/items_for_gen_pass/symbols.dart';
-import 'package:dhak/util/code_unit_range.dart';
-import 'package:dhak/util/dhak_exception.dart';
 
 enum OptionTarget { force, display, len, sym, algo, cost }
 
@@ -25,11 +22,19 @@ class Options {
   }
 
   bool haveForce() {
-    return this._procMatchedOpt<bool>(OptionTarget.force, (opt) => true);
+    try {
+      return this._procMatchedOpt<bool>(OptionTarget.force, (opt) => true);
+    } on _NoReturnValueException {
+      return false;
+    }
   }
 
   bool haveDisplay() {
-    return this._procMatchedOpt<bool>(OptionTarget.display, (opt) => true);
+    try {
+      return this._procMatchedOpt<bool>(OptionTarget.display, (opt) => true);
+    } on _NoReturnValueException {
+      return false;
+    }
   }
 
   PassLength passLength() {
@@ -43,7 +48,7 @@ class Options {
     var sym = this._procMatchedOpt<String>(OptionTarget.sym, (opt) {
       return opt.replaceAll('--sym=', '');
     });
-    
+
     return Symbols(sym);
   }
 
@@ -67,7 +72,7 @@ class Options {
         return callback(opt);
       }
     }
-    throw ArgumentError('There is no option matched with "$target".');
+    throw _NoReturnValueException('There is no option matched with "$target".');
   }
 
   bool _equals(String option, OptionTarget target) {
@@ -92,4 +97,10 @@ class Options {
         return option.contains('--cost=');
     }
   }
+}
+
+class _NoReturnValueException implements Exception {
+  final String message;
+
+  _NoReturnValueException(this.message);
 }
