@@ -24,6 +24,7 @@ class GenerateCmd extends Cmd {
     this.presetName = presetName;
     this.options = Options(optionList);
     this.passPhrase = passPhrase;
+    this.path = path;
 
     if (path == '') {
       Map<String, String> env = Platform.environment;
@@ -36,8 +37,6 @@ class GenerateCmd extends Cmd {
         throw DhakRuntimeException(
             'Platform error: "${Platform.operatingSystem}" is not supported.');
       }
-    } else {
-      this.path = path;
     }
   }
 
