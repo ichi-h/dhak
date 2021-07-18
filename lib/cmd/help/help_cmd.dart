@@ -4,22 +4,32 @@ class HelpCmd extends Cmd {
   @override
   void run() {
     print(
-        '''Usage: dhak [-v, --version] [-h, --help] <title> (<preset>) [option]
+        '''Usage: dhak [-h, --help] [-v, --version] <title> (<preset>) [option]
 
-dhak combines your original passphrase with the name of the service that requires a password, hashes it, and uses the value as the new password.
-The generated password will be copied to the clipboard.
-
-The syntax of dhak basically consists of three parts: <title>, <preset>, and [option].
-
+-h, --help:
+    Display the help of dhak.
+-v, --version:
+    Display the version of dhak.
 title:
-  The name of the service.
+    The name of the service.
 preset:
-  The pre-prepared setting for password generation (you can add a preset in ~/.dhakrc).
-  If you omit this, the value will be "default".
+    The pre-prepared setting for password generation (you can add a preset in ~/.dhakrc).
+    If you omit this, the value will be "default".
 option:
-  Specify additional functions as needed. The options should be connected like "-df".
-    -d: Display the password in the terminal.
-    -f: Generate the password which is less than 8 forcibly.
+    Specify additional functions as needed.
+    dhak will use the optional settings in preference to the preset ones.
+    -d, --display
+        Display the password in the terminal.
+    -f, --force
+        Generate a non-secure password forcibly, such as a password whose length is less than 8 or a password which has only lower-case.
+    --len=
+        Set a password length. If it is less than 8, you cannot generate the password basically.
+    --sym=
+        Set symbols used the password generation.
+    --algo=
+        Set an algorithm of BCrypt. You can use "2", "2a", "2y" and "2b (default)".
+    --cost=
+        Set a cost of BCrypt. It must be between 4 and 31. The actual rounds of stretching are 2^n.
 ''');
   }
 }
