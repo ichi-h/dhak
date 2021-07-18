@@ -12,6 +12,41 @@ _dhak_ combines your original passphrase with the name of the service that requi
 
 In this way, you can manage your passwords without storing them anywhere.
 
+The GUI edition is in progress.
+
+## Installation
+
+Coming soon...
+
+## Usage
+
+```
+dhak [-h, --help] [-v, --version] <title> (<preset>) [option]
+```
+
+- -h, --help:
+    - Display the help of dhak.
+- -v, --version:
+    - Display the version of dhak.
+- title:
+    - The name of the service.
+- preset:
+    - The pre-prepared setting for password generation (you can add a preset in ~/.dhakrc). If you omit this, the value will be "default".
+- option:
+    - Specify additional functions as needed. dhak will use the optional settings in preference to the preset ones.
+        - -d, --display
+            - Display the password in the terminal.
+        - -f, --force
+            - Generate a non-secure password forcibly, such as a password whose length is less than 8 or a password which has only lower-case.
+        - --len=
+            - Set a password length. If it is less than 8, you cannot generate the password basically.
+        - --sym=
+            - Set symbols used the password generation.
+        - --algo=
+            - Set an algorithm of BCrypt. You can use "2", "2a", "2y" and "2b (default)".
+        - --cost=
+        - Set a cost of BCrypt. It must be between 4 and 31. The actual rounds of stretching are 2^n.
+
 ## Why is it doing this?
 
 The greatest strength of dhak is that **it is resistant to information leaks because it does not retain sensitive information.**
@@ -25,7 +60,3 @@ General password managers manage sensitive information by encrypting/decrypting 
 However, it does not change the fact that they are still possessing sensitive information in any form, which means that you are taking the risk of information leakage in terms of fundamental security measures.
 
 In order to minimize this risk, _dhak_ manages passwords by NOT storing such sensitive information, but **by generating them when needed**.
-
-Of course, there is no perfect security measure.  
-There is a possibility that your password could be leaked from other servers even if it is not from this app.  
-However, in password management, reducing the risk of information leakage is a powerful security measure.
