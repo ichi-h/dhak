@@ -5,8 +5,8 @@ import 'package:dhak/items_for_gen_pass/symbols.dart';
 
 class Preset {
   final String _name;
-  final int _passLength;
-  final List<String> _symbols;
+  final String _passLength;
+  final String _symbols;
   final String _algo;
   final String _cost;
   final String _salt;

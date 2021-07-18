@@ -1,4 +1,4 @@
-import 'package:dhak/args/option_checker.dart';
+import 'package:dhak/items_for_gen_pass/item_checker.dart';
 import 'package:dhak/items_for_gen_pass/algorithm.dart';
 import 'package:dhak/items_for_gen_pass/cost.dart';
 import 'package:dhak/items_for_gen_pass/pass_length.dart';
@@ -33,43 +33,16 @@ class Options {
   }
 
   PassLength passLength() {
-    final lenStr = this._procMatchedOpt<String>(OptionTarget.len, (opt) {
+    final len = this._procMatchedOpt<String>(OptionTarget.len, (opt) {
       return opt.replaceAll('--len=', '');
     });
-
-    if (!OptionChecker.canParseInt(lenStr)) {
-      throw DhakRuntimeException(
-          'Runtime error: The value "$lenStr" of the option "--len" is invalid.');
-    }
-
-    var len = int.parse(lenStr);
-    if (!OptionChecker.passLenIsSafety(len, this.haveForce())) {
-      throw DhakRuntimeException(
-          'Preset error: The password length "$len" is invalid. '
-          'The length must be more than 8.');
-    }
-
     return PassLength(len);
   }
 
   Symbols symbols() {
-    var sym = this._procMatchedOpt<List<String>>(OptionTarget.sym, (opt) {
-      var symStr = opt.replaceAll('--sym=', '');
-      return symStr.split('');
+    var sym = this._procMatchedOpt<String>(OptionTarget.sym, (opt) {
+      return opt.replaceAll('--sym=', '');
     });
-
-    sym = sym.where((symbol) {
-      var unit = symbol.codeUnitAt(0);
-      var status = !CodeUnitRange.isLowerCase(unit) &&
-          !CodeUnitRange.isUpperCase(unit) &&
-          !CodeUnitRange.isNumber(unit);
-
-      if (!status) {
-        print('Notice: The symbol "$symbol" was ignored.');
-      }
-
-      return status;
-    }).toList();
     
     return Symbols(sym);
   }
@@ -78,12 +51,6 @@ class Options {
     final algo = this._procMatchedOpt<String>(OptionTarget.algo, (opt) {
       return opt.replaceAll('--algo=', '');
     });
-
-    if (!OptionChecker.isValidAlgo(algo)) {
-      throw DhakRuntimeException(
-          'Preset error: The unknown algorithm "$algo" was found.');
-    }
-
     return Algorithm(algo);
   }
 
@@ -91,18 +58,6 @@ class Options {
     final cost = this._procMatchedOpt<String>(OptionTarget.cost, (opt) {
       return opt.replaceAll('--cost=', '');
     });
-
-    if (!OptionChecker.canParseInt(cost)) {
-      throw DhakRuntimeException(
-          'Runtime error: The value "$cost" of the option "--cost" is invalid.');
-    }
-
-    int costInt = int.parse(cost);
-    if (!OptionChecker.isValidCost(costInt)) {
-      throw DhakRuntimeException('Preset error: The cost "$cost" is invalid.'
-          'It must be between 4 and 31.');
-    }
-
     return Cost(cost);
   }
 

@@ -4,17 +4,17 @@ import 'package:test/test.dart';
 
 void main() {
   test('Get passLength value', (() {
-    var len = PassLength(20);
+    var len = PassLength('20');
     expect(len.value(), equals(20));
   }));
 
   test('Get passLength value by -f', (() {
-    var len = PassLength(5);
+    var len = PassLength('5');
     expect(len.value(true), equals(5));
   }));
 
   test('When passLength is invalid', (() {
-    var len = PassLength(1);
+    var len = PassLength('1');
     try {
       len.value();
     } on DhakRuntimeException {

@@ -31,12 +31,11 @@ class Config {
           'Runtime error: The preset name "$presetName" was not found.');
     }
 
-    int? passLength = preset['password_length'];
-    passLength ??= 20;
+    String? passLength = preset['password_length'];
+    passLength ??= '20';
 
-    String? symStr = preset['symbols'];
-    symStr ??= '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~';
-    var symbols = symStr.split('');
+    String? symbols = preset['symbols'];
+    symbols ??= '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~';
 
     String? algo = preset['algorithm'];
     String? cost = preset['cost'];
