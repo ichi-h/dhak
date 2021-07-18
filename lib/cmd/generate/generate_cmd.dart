@@ -68,12 +68,14 @@ class GenerateCmd extends Cmd {
     final config = Config(this.path);
     final preset = config.getPreset(this.presetName, target.hashCode);
 
-    var password = this._genPassword(target, preset);
-    status = PasswordStatus(password);
+    var force = this.options.haveForce();
+    var password = this._genPassword(target, preset, force);
+
     final rnd = Random(password.hashCode);
-    while (!status.isSecure(this.options.haveForce())) {
+    status = PasswordStatus(password);
+    while (!status.isSecure(force)) {
       var num = rnd.nextInt(100);
-      password = this._genPassword('$num$target', preset);
+      password = this._genPassword('$num$target', preset, force);
       status = PasswordStatus(password);
     }
 
@@ -86,23 +88,22 @@ class GenerateCmd extends Cmd {
     }
   }
 
-  String _genPassword(String target, Preset preset) {
-    var len = preset.passLength();
+  String _genPassword(String target, Preset preset, bool force) {
+    var len = preset.passLength().value(force);
     if (this.options.exist(OptionTarget.len)) {
-      len = this.options.passLength();
+      len = this.options.passLength().value(force);
     }
 
-    final defSalt = preset.salt().split('\$');
-    var algo = defSalt[1];
-    var cost = defSalt[2];
+    var algo = preset.algorithm().value();
+    var cost = preset.cost().value();
     if (this.options.exist(OptionTarget.algo)) {
-      algo = this.options.algorithm();
+      algo = this.options.algorithm().value();
     }
     if (this.options.exist(OptionTarget.cost)) {
-      cost = this.options.cost();
+      cost = this.options.cost().value();
     }
 
-    final salt = '\$$algo\$$cost\$${defSalt[3]}';
+    final salt = '\$$algo\$$cost\$${preset.salt()}';
 
     var reversed = '';
     var encrypted = target;
@@ -113,9 +114,9 @@ class GenerateCmd extends Cmd {
       }
     }
 
-    var symbols = preset.symbols();
+    var symbols = preset.symbols().value();
     if (this.options.exist(OptionTarget.sym)) {
-      symbols = this.options.symbols();
+      symbols = this.options.symbols().value();
     }
 
     var password = reversed.substring(0, len);
