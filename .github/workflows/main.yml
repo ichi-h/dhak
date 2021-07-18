@@ -29,8 +29,5 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'stable'
-      - run: curl -sLJO https://github.com/ippee/libclipboard/releases/download/0.1.0/libclipboard.dll
-      - run: curl -sLJO https://github.com/ippee/libclipboard/releases/download/0.1.0/libclipboard.dylib
-      - run: curl -sLJO https://github.com/ippee/libclipboard/releases/download/0.1.0/libclipboard.so
       - run: flutter pub get
       - run: flutter test
