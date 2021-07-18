@@ -71,6 +71,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  console:
+    dependency: "direct main"
+    description:
+      name: console
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
   convert:
     dependency: transitive
     description:
@@ -102,11 +109,9 @@ packages:
   dart_clipboard:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "920615581edf35023e8d527c8f8e902e076adf47"
-      url: "git://github.com/ippee/dart_clipboard.git"
-    source: git
+      name: dart_clipboard
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.1.0"
   dbcrypt:
     dependency: "direct main"
@@ -397,7 +402,7 @@ packages:
     source: hosted
     version: "1.0.0"
   yaml:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: yaml
       url: "https://pub.dartlang.org"
