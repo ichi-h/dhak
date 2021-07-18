@@ -7,23 +7,13 @@ void main() {
     var options = Options(['']);
 
     test('haveForce() is false', () {
-      expect(options.haveForce(), isFalse);
+      var result = options.haveForce();
+      expect(result, isFalse);
     });
 
     test('haveDisplay() is false', () {
-      expect(options.haveDisplay(), isFalse);
-    });
-
-    test('passLength() is 20', () {
-      expect(options.passLength(), equals(20));
-    });
-
-    test('algorithm() is "2b"', () {
-      expect(options.algorithm(), equals('2b'));
-    });
-
-    test('cost() is "10"', () {
-      expect(options.cost(), equals('10'));
+      var result = options.haveDisplay();
+      expect(result, isFalse);
     });
   });
 
@@ -40,20 +30,21 @@ void main() {
     });
 
     test('algorithm() is "2b"', () {
-      expect(options.algorithm(), equals('2b'));
+      expect(options.algorithm().value(), equals('2b'));
     });
 
     test('cost() is "10"', () {
-      expect(options.cost(), equals('10'));
+      expect(options.cost().value(), equals('10'));
     });
 
     test('passLength() is 20', () {
-      expect(options.passLength(), equals(20));
+      expect(options.passLength().value(), equals(20));
     });
 
     test('passLength() is 5 by -f', () {
       options =  Options(['-f', '--len=5']);
-      expect(options.passLength(), equals(5));
+      var force = options.haveForce();
+      expect(options.passLength().value(force), equals(5));
     });
   });
 
@@ -63,7 +54,7 @@ void main() {
     test('When passLength() is invalid', () {
       var result;
       try {
-        result = options.passLength();
+        result = options.passLength().value();
       } on DhakRuntimeException {
         return;
       }
@@ -74,7 +65,7 @@ void main() {
     test('When cost() is invalid', () {
       var result;
       try {
-        result = options.cost();
+        result = options.cost().value();
       } on DhakRuntimeException {
         return;
       }

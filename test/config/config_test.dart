@@ -16,11 +16,13 @@ void main() {
       config = Config('./.dhakrc');
       var preset = config.getPreset('default', 0);
 
+      var algo = preset.algorithm().value();
+      var cost = preset.cost().value();
       var result = {
         'presetName': preset.name(),
-        'passLen': preset.passLength(),
-        'symbols': preset.symbols(),
-        'salt': preset.salt()
+        'passLen': preset.passLength().value(),
+        'symbols': preset.symbols().value(),
+        'salt': '\$$algo\$$cost\$${preset.salt()}'
       };
       var expected = {
         'presetName': 'default',
