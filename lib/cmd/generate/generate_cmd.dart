@@ -46,9 +46,7 @@ class GenerateCmd extends Cmd {
       this.passPhrase = HiddenInput.readPassword('Passphrase: ');
     }
 
-    PasswordStatus status;
-
-    status = PasswordStatus(passPhrase);
+    var status = PasswordStatus(passPhrase);
     if (!status.isSecure()) {
       throw DhakRuntimeException(
           'Runtime error: The passphrase you entered was not secure. '
