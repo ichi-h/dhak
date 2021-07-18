@@ -1,5 +1,7 @@
+import 'package:console/console.dart';
 import 'package:dhak/items_for_gen_pass/item.dart';
 import 'package:dhak/items_for_gen_pass/item_checker.dart';
+import 'package:dhak/util/color_print.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
 class PassLength extends Item<int> {
@@ -31,8 +33,9 @@ class PassLength extends Item<int> {
     }
 
     if (len < 12) {
-      print('WARNING: The password length is "$len", which is short. '
-          'It should be more than 12.');
+      var text = 'WARNING: The password length is "$len", which is short. '
+          'It should be more than 12.';
+      colorPrint(text, Color.YELLOW);
     }
 
     return true;

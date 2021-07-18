@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:console/console.dart';
 import 'package:dhak/args/separate_args.dart';
 import 'package:dhak/cmd/command_routing.dart';
+import 'package:dhak/util/color_print.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
 void main(List<String> arguments) {
@@ -16,7 +18,7 @@ void main(List<String> arguments) {
     preset = sepArgs.preset();
     options = sepArgs.options();
   } on DhakArgsException catch(e) {
-    print(e.message);
+    colorPrint(e.message, Color.RED);
     exit(1);
   }
 

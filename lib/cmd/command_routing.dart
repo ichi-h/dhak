@@ -1,7 +1,9 @@
+import 'package:console/console.dart';
 import 'package:dhak/cmd/cmd.dart';
 import 'package:dhak/cmd/generate/generate_cmd.dart';
 import 'package:dhak/cmd/help/help_cmd.dart';
 import 'package:dhak/cmd/version/version_cmd.dart';
+import 'package:dhak/util/color_print.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
 class CommandRouting extends Cmd {
@@ -15,10 +17,10 @@ class CommandRouting extends Cmd {
     try {
       this._runCmd();
     } on DhakArgsException catch (e) {
-      print(e.message);
+      colorPrint(e.message, Color.RED);
       CommandRouting('', '', ['--help']).run();
     } on DhakRuntimeException catch (e) {
-      print(e.message);
+      colorPrint(e.message, Color.RED);
     }
   }
 
