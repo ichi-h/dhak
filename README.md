@@ -1,5 +1,7 @@
 # dhak
 
+[![Dhak CI](https://github.com/ippee/dhak/actions/workflows/main.yml/badge.svg)](https://github.com/ippee/dhak/actions/workflows/main.yml)
+
 A password manager without storing passwords, in Dart/Flutter.
 
 ## What is dhak?
