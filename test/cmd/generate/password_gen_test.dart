@@ -32,7 +32,7 @@ void main() {
     });
 
     test('Dangerous password generation', () {
-      var options = Options(['']);
+      var options = Options(['--force']);
       preset = config.getPreset('danger');
       var result = genPasswords(target, preset, options);
       if (result[0] != result[1]) {
