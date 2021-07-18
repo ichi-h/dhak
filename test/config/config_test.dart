@@ -8,7 +8,7 @@ void main() {
 
   group('Normal behavior', () {
     tearDownAll(() {
-      var file = File('./tool/.dhakrc');
+      var file = File('./.dhakrc_test');
       file.deleteSync();
     });
 
@@ -35,9 +35,9 @@ void main() {
     });
 
     test('When .dhakrc was not found', () {
-      config = Config('./tool/.dhakrc');
+      config = Config('./.dhakrc_test');
 
-      var file = File('./tool/.dhakrc');
+      var file = File('./.dhakrc_test');
       expect(file.existsSync(), isTrue);
     });
   });
