@@ -23,7 +23,7 @@ class SeparateArgs {
     for (var i = index; i < this.args.length; i++) {
       if (!this.args[i].startsWith('-')) {
         throw DhakArgsException(
-            'Syntax error: The argument ${this.args[i]} is not a option.');
+            'Syntax error: The argument "${this.args[i]}" is not a option.');
       }
       backArgs.add(this.args[i]);
     }
@@ -59,7 +59,7 @@ class SeparateArgs {
         }
 
         throw DhakArgsException(
-            'Syntax error: $unknownArgs are unknown arguments.');
+            'Syntax error: "$unknownArgs" are unknown arguments.');
     }
   }
 
