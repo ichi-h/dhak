@@ -18,7 +18,8 @@ class GenerateCmd extends Cmd {
   late String passPhrase;
   late String path;
 
-  GenerateCmd(String title, String presetName, List<String> optionList, [String passPhrase = '', String path = '']) {
+  GenerateCmd(String title, String presetName, List<String> optionList,
+      [String passPhrase = '', String path = '']) {
     this.title = title;
     this.presetName = presetName;
     this.options = Options(optionList);
@@ -50,8 +51,9 @@ class GenerateCmd extends Cmd {
 
     status = PasswordStatus(passPhrase);
     if (!status.isSecure()) {
-      print('WARNING: The passphrase you entered was not secure. '
-          'A passphrase should have length of 8 or more and contain at least one lower-case, upper-case and number.\n');
+      throw DhakRuntimeException(
+          'Runtime error: The passphrase you entered was not secure. '
+          'At least, a passphrase must have length of 8 or more and contain one lower-case, upper-case and number at least.');
     }
 
     // The countermeasure for the total length with the passphrase and the title
