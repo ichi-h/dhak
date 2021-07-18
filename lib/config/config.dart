@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dhak/config/preset.dart';
-import 'package:dhak/crypto/gen_salt.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
 class Config {
@@ -24,7 +23,7 @@ class Config {
     this._doc = json.decode(contents);
   }
 
-  Preset getPreset(String presetName, int hashCode) {
+  Preset getPreset(String presetName) {
     final preset = this._doc['presets'][presetName];
     if (preset == null) {
       throw DhakRuntimeException(
@@ -41,9 +40,8 @@ class Config {
     String? cost = preset['cost'];
     algo ??= '2b';
     cost ??= '10';
-    var salt = GenSalt.fromHashCode(hashCode);
 
-    return Preset(presetName, passLength, symbols, algo, cost, salt);
+    return Preset(presetName, passLength, symbols, algo, cost);
   }
 
   static String _stringConfig() {

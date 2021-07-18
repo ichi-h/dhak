@@ -9,10 +9,8 @@ class Preset {
   final String _symbols;
   final String _algo;
   final String _cost;
-  final String _salt;
 
-  Preset(this._name, this._passLength, this._symbols, this._algo, this._cost,
-      this._salt);
+  Preset(this._name, this._passLength, this._symbols, this._algo, this._cost);
 
   String name() => this._name;
 
@@ -23,6 +21,4 @@ class Preset {
   Algorithm algorithm() => Algorithm(this._algo);
 
   Cost cost() => Cost(this._cost);
-
-  String salt() => this._salt;
 }

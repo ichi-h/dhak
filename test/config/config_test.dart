@@ -14,21 +14,21 @@ void main() {
 
     test('Get default preset', () {
       config = Config('./.dhakrc');
-      var preset = config.getPreset('default', 0);
+      var preset = config.getPreset('default');
 
-      var algo = preset.algorithm().value();
-      var cost = preset.cost().value();
       var result = {
         'presetName': preset.name(),
         'passLen': preset.passLength().value(),
         'symbols': preset.symbols().value(),
-        'salt': '\$$algo\$$cost\$${preset.salt()}'
+        'algo': preset.algorithm().value(),
+        'cost': preset.cost().value()
       };
       var expected = {
         'presetName': 'default',
         'passLen': 20,
         'symbols': '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~'.split(''),
-        'salt': '\$2b\$10\$pbCZ/hEjzP3IO4Z/bTaDBV'
+        'algo': '2b',
+        'cost': '10'
       };
 
       expect(result, equals(expected));

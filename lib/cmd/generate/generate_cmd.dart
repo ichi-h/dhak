@@ -63,7 +63,7 @@ class GenerateCmd extends Cmd {
     final target = String.fromCharCodes(hash);
 
     final config = Config(this.path);
-    final preset = config.getPreset(this.presetName, target.hashCode);
+    final preset = config.getPreset(this.presetName);
 
     var passGen = PasswordGen(target, preset, this.options);
     var password = passGen.getPassword();

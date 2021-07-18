@@ -5,6 +5,7 @@ import 'package:dhak/args/options.dart';
 import 'package:dhak/cmd/generate/password_operator.dart';
 import 'package:dhak/cmd/generate/password_status.dart';
 import 'package:dhak/config/preset.dart';
+import 'package:dhak/crypto/gen_salt.dart';
 
 class PasswordGen {
   final String _target;
@@ -43,7 +44,8 @@ class PasswordGen {
       cost = this._options.cost().value();
     }
 
-    final salt = '\$$algo\$$cost\$${this._preset.salt()}';
+    var hashCode = this._target.hashCode;
+    final salt = '\$$algo\$$cost\$${GenSalt.fromHashCode(hashCode)}';
 
     var reversed = '';
     var encrypted = '$rndInt${this._target}';
