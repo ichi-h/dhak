@@ -26,7 +26,7 @@ void main() {
       var expected = {
         'presetName': 'default',
         'passLen': 20,
-        'symbols': '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~'.split(''),
+        'symbols': r'!"#$%&‘()*+,-./:;<=>?@[\]^_`{|}~'.split(''),
         'algo': '2b',
         'cost': '10'
       };

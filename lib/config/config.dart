@@ -34,7 +34,7 @@ class Config {
     passLength ??= '20';
 
     String? symbols = preset['symbols'];
-    symbols ??= '!"#\$%&‘()*+,-./:;<=>?@[\\}^_`{|}~';
+    symbols ??= r'!"#$%&‘()*+,-./:;<=>?@[\]^_`{|}~';
 
     String? algo = preset['algorithm'];
     String? cost = preset['cost'];
@@ -49,7 +49,7 @@ class Config {
   "presets": {
     "default": {
       "password_length": "20",
-      "symbols": "!\"#$%&‘()*+,-./:;<=>?@[\\}^_`{|}~",
+      "symbols": "!\"#$%&‘()*+,-./:;<=>?@[\\]^_`{|}~",
       "algorithm": "2b",
       "cost": "10"
     }
