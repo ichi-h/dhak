@@ -8,6 +8,7 @@ class PasswordStatus {
   bool hasSymbols() {
     var result = this.password;
 
+    // Remove characters except symbols.
     for (var i = 0; i < this.password.length; i++) {
       var char = this.password[i];
       var unit = char.codeUnitAt(0);
