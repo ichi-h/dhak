@@ -15,7 +15,7 @@ class PasswordGen {
   PasswordGen(this._target, this._preset, this._options);
 
   String getPassword() {
-    var force = this._options.haveForce();
+    var force = this._options.exist(OptionTarget.force);
 
     var password = this._genPassword(force);
     final rnd = Random(password.hashCode);

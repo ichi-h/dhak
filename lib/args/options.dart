@@ -21,22 +21,6 @@ class Options {
     return false;
   }
 
-  bool haveForce() {
-    try {
-      return this._procMatchedOpt<bool>(OptionTarget.force, (opt) => true);
-    } on _NoReturnValueException {
-      return false;
-    }
-  }
-
-  bool haveDisplay() {
-    try {
-      return this._procMatchedOpt<bool>(OptionTarget.display, (opt) => true);
-    } on _NoReturnValueException {
-      return false;
-    }
-  }
-
   PassLength passLength() {
     final len = this._procMatchedOpt<String>(OptionTarget.len, (opt) {
       return opt.replaceAll('--len=', '');

@@ -72,7 +72,7 @@ class GenerateCmd extends Cmd {
     clipboard.setContents(password);
 
     print('Password was copied to clipboard!');
-    if (this.options.haveDisplay()) {
+    if (this.options.exist(OptionTarget.display)) {
       print('Password: $password');
     }
   }

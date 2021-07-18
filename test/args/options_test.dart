@@ -3,30 +3,32 @@ import 'package:dhak/util/dhak_exception.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('When option is empty ', () {
-    var options = Options(['']);
+  group('When option is empty', () {
+    test('There is no option', () {
+      var options = Options(['']);
 
-    test('haveForce() is false', () {
-      var result = options.haveForce();
-      expect(result, isFalse);
-    });
+      List<bool> result = [];
+      for (var target in OptionTarget.values) {
+        result.add(options.exist(target));
+      }
 
-    test('haveDisplay() is false', () {
-      var result = options.haveDisplay();
-      expect(result, isFalse);
+      var expected = [false, false, false, false, false, false];
+      expect(result, equals(expected));
     });
   });
 
-  group('When option is not empty ', () {
+  group('When option is not empty', () {
     var options =
-        Options(['-f', '--display', '--len=20', '--algo=2b', '--cost=10']);
+        Options(['-f', '--display', '--len=20', '--sym=#%`r^', '--algo=2b', '--cost=10']);
 
-    test('haveForce() is true', () {
-      expect(options.haveForce(), isTrue);
-    });
+    test('There are all options', () {
+      List<bool> result = [];
+      for (var target in OptionTarget.values) {
+        result.add(options.exist(target));
+      }
 
-    test('haveDisplay() is true', () {
-      expect(options.haveDisplay(), isTrue);
+      var expected = [true, true, true, true, true, true];
+      expect(result, equals(expected));
     });
 
     test('algorithm() is "2b"', () {
@@ -41,9 +43,13 @@ void main() {
       expect(options.passLength().value(), equals(20));
     });
 
+    test("symbols() is ['#', '%', '`', '^']", () {
+      expect(options.symbols().value(), equals(['#', '%', '`', '^']));
+    });
+
     test('passLength() is 5 by -f', () {
       options =  Options(['-f', '--len=5']);
-      var force = options.haveForce();
+      var force = options.exist(OptionTarget.force);
       expect(options.passLength().value(force), equals(5));
     });
   });
