@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 void main() {
   test('Get cost value', (() {
     var cost = Cost('4');
-    expect(cost.value(), equals('04'));
+    expect(cost.value(), equals(04));
   }));
 
   test('When cost is invalid', (() {

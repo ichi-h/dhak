@@ -5,7 +5,6 @@ import 'package:dhak/args/options.dart';
 import 'package:dhak/cmd/generate/password_operator.dart';
 import 'package:dhak/cmd/generate/password_status.dart';
 import 'package:dhak/config/preset.dart';
-import 'package:dhak/crypto/gen_salt.dart';
 
 class PasswordGen {
   final String _target;
@@ -76,10 +75,15 @@ class PasswordGen {
   }
 
   String _getSalt() {
-    var algo = this._getAlgo();
-    var cost = this._getCost();
-    var hashCode = this._target.hashCode;
-    return '\$$algo\$$cost\$${GenSalt.fromHashCode(hashCode)}';
+    final algo = this._getAlgo();
+    final cost = this._getCost();
+    final hashCode = this._target.hashCode;
+
+    final rnd = Random(hashCode);
+    var salt = DBCrypt().gensaltWithRoundsAndRandom(cost, rnd);
+    salt = salt.replaceFirst('2b', algo);
+
+    return salt;
   }
 
   String _getAlgo() {
@@ -90,7 +94,7 @@ class PasswordGen {
     return algo;
   }
 
-  String _getCost() {
+  int _getCost() {
     var cost = this._preset.cost().value();
     if (this._options.exist(OptionTarget.cost)) {
       cost = this._options.cost().value();

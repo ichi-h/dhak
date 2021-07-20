@@ -36,7 +36,7 @@ void main() {
     });
 
     test('cost() is "10"', () {
-      expect(options.cost().value(), equals('10'));
+      expect(options.cost().value(), equals(10));
     });
 
     test('passLength() is 20', () {

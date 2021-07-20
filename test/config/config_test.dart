@@ -28,7 +28,7 @@ void main() {
         'passLen': 20,
         'symbols': r'!"#$%&‘()*+,-./:;<=>?@[\]^_`{|}~'.split(''),
         'algo': '2b',
-        'cost': '10'
+        'cost': 10
       };
 
       expect(result, equals(expected));
