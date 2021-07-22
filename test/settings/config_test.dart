@@ -1,4 +1,5 @@
 import 'package:dhak/settings/config.dart';
+import 'package:dhak/util/dhak_exception.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -28,5 +29,14 @@ void main() {
     });
   });
 
-  // group('Abnormal behavior', () {});
+  group('Abnormal behavior', () {
+    test('When ~/.dhakrc was not found', () {
+      try {
+        config = Config('./foo');
+      } on DhakRuntimeException {
+        return;
+      }
+      fail('The file "foo" is supposed to exist.');
+    });
+  });
 }

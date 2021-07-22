@@ -12,6 +12,10 @@ class Config {
 
   Config(String path) {
     var file = File(path);
+    if (!file.existsSync()) {
+      throw DhakRuntimeException('Runtime error: "~/.dhakrc" was not found.');
+    }
+
     var contents = file.readAsStringSync();
     this._doc = json.decode(contents);
 
