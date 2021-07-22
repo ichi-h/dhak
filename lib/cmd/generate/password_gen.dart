@@ -43,11 +43,10 @@ class PasswordGen {
     var password = hash.substring(0, this._len);
 
     // Remove symbols which exist from the beginning.
-    final operator = PasswordOperator(password);
-    password = operator.replaceSymbols();
+    password = PasswordOperator.replaceSymbols(password);
 
     if (this._sym.length != 0) {
-      password = operator.replaceAtRandomWith(this._sym);
+      password = PasswordOperator.replaceAtRandomWith(password, this._sym);
     }
 
     return password;

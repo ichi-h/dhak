@@ -4,20 +4,16 @@ import 'package:dhak/util/code_unit_range.dart';
 import 'package:dhak/util/global_const.dart';
 
 class PasswordOperator {
-  final String password;
-
-  PasswordOperator(this.password);
-
-  String replaceAtRandomWith(List<String> symbols) {
-    final rnd = Random(this.password.hashCode);
-    final passLen = this.password.length;
+  static String replaceAtRandomWith(String password, List<String> symbols) {
+    final rnd = Random(password.hashCode);
+    final passLen = password.length;
 
     // Calculate trials of replacements.
     // It is adjusted to be from 1 to one third of password length.
     var maxTrials = (passLen / 3).round();
     final trials = 1 + rnd.nextInt(maxTrials) % maxTrials;
 
-    var result = this.password;
+    var result = password;
 
     for (var i = 0; i < trials; i++) {
       var targetIndex = rnd.nextInt(passLen);
@@ -28,14 +24,14 @@ class PasswordOperator {
     return result;
   }
 
-  String replaceSymbols() {
-    final rnd = Random(this.password.hashCode);
+  static String replaceSymbols(String password) {
+    final rnd = Random(password.hashCode);
     final letterLen = GlobalConst.letters.length;
 
-    var result = this.password;
+    var result = password;
 
-    for (var i = 0; i < this.password.length; i++) {
-      var char = this.password[i];
+    for (var i = 0; i < password.length; i++) {
+      var char = password[i];
       var unit = char.codeUnitAt(0);
 
       if (!CodeUnitRange.isLowerCase(unit) &&
