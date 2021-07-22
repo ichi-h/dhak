@@ -50,11 +50,11 @@ The following values of the options means the default value in this app. If you 
 - -d, --display
     - Display the password in the terminal.
 - -f, --force (deprecated)
-    - Forcibly generate a password which may be insecure, such as a password whose length is less than 8 or which has only lower-case.
+    - Forcibly generate a password which may be insecure, such as a password whose length is less than 12 or which has only lower-case.
     - <u><b>YOU SHOULD USE THIS OPTION AS LITTLE AS POSSIBLE.</b></u>
 - --len=20
     - Set a password length.
-    - If it is less than 8, you cannot generate the password basically.
+    - If it is less than 12, you cannot generate the password basically.
 - --sym=!\"#$%&‘()*+,-./:;<=>?@\[\\]^_`{|}~
     - Set symbols used the password generation.
     - You can use any symbols except lower-case, upper-case and numbers.

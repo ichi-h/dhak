@@ -21,19 +21,19 @@ class PassLength extends Item<int> {
     if (!this._passLenIsSafety(len, force)) {
       throw DhakRuntimeException(
           'Preset error: The password length "${this._len}" is invalid. '
-          'It must be 8 or more.');
+          'It must be 12 or more.');
     }
 
     return len;
   }
 
   bool _passLenIsSafety(int len, bool force) {
-    if (len < 8 && !force) {
+    if (len < 12 && !force) {
       return false;
     }
 
     if (len < 12) {
-      var text = 'WARNING: The password length is "$len", which is short. '
+      var text = 'WARNING: The password length "$len" is too short. '
           'It should be more than 12.';
       colorPrint(text, Color.YELLOW);
     }

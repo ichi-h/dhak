@@ -52,7 +52,7 @@ class GenerateCmd extends Cmd {
     if (!status.isSecure()) {
       throw DhakRuntimeException(
           'Runtime error: The passphrase you entered was not secure. '
-          'At least, a passphrase must have length of 8 or more and contain one lower-case, upper-case and number at least.');
+          'At least, a passphrase must have length of 12 or more and contain one lower-case, upper-case and number at least.');
     }
 
     // The countermeasure for the total length with the passphrase and the title
