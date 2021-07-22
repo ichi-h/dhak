@@ -2,12 +2,13 @@ import 'package:dhak/items_for_gen_pass/algorithm.dart';
 import 'package:dhak/items_for_gen_pass/cost.dart';
 import 'package:dhak/items_for_gen_pass/pass_length.dart';
 import 'package:dhak/items_for_gen_pass/symbols.dart';
+import 'package:dhak/settings/settings.dart';
 
 enum OptionTarget { force, display, len, sym, algo, cost }
 
 typedef _Callback<T> = T Function(String option);
 
-class Options {
+class Options extends Settings {
   final List<String> _options;
 
   Options(this._options);
@@ -21,6 +22,7 @@ class Options {
     return false;
   }
 
+  @override
   PassLength passLength() {
     final len = this._procMatchedOpt<String>(OptionTarget.len, (opt) {
       return opt.replaceAll('--len=', '');
@@ -28,6 +30,7 @@ class Options {
     return PassLength(len);
   }
 
+  @override
   Symbols symbols() {
     var sym = this._procMatchedOpt<String>(OptionTarget.sym, (opt) {
       return opt.replaceAll('--sym=', '');
@@ -36,6 +39,7 @@ class Options {
     return Symbols(sym);
   }
 
+  @override
   Algorithm algorithm() {
     final algo = this._procMatchedOpt<String>(OptionTarget.algo, (opt) {
       return opt.replaceAll('--algo=', '');
@@ -43,6 +47,7 @@ class Options {
     return Algorithm(algo);
   }
 
+  @override
   Cost cost() {
     final cost = this._procMatchedOpt<String>(OptionTarget.cost, (opt) {
       return opt.replaceAll('--cost=', '');
