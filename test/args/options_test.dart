@@ -1,4 +1,4 @@
-import 'package:dhak/args/options.dart';
+import 'package:dhak/settings/options.dart';
 import 'package:dhak/util/dhak_exception.dart';
 import 'package:test/test.dart';
 

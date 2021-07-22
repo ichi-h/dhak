@@ -1,4 +1,4 @@
-import 'package:dhak/args/options.dart';
+import 'package:dhak/settings/options.dart';
 import 'package:dhak/cmd/generate/password_gen.dart';
 import 'package:dhak/settings/config.dart';
 import 'package:dhak/settings/preset.dart';
