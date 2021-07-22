@@ -46,7 +46,7 @@ class SeparateArgs {
 
       case 1:
         if (target == _Target.title) return frontArgs[0];
-        return 'default';
+        return '';
 
       case 2:
         if (target == _Target.title) return frontArgs[0];
