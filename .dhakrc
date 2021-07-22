@@ -1,6 +1,6 @@
 {
   "presets": {
-    "default": {
+    "sample": {
       "password_length": "20",
       "symbols": "!\"#$%&‘()*+,-./:;<=>?@[\\]^_`{|}~",
       "algorithm": "2b",

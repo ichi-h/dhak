@@ -33,14 +33,14 @@ void main() {
       };
       final expected = {
         'title': 'GitHub',
-        'preset': 'default',
+        'preset': '',
         'options': ['']
       };
       expect(actual, equals(expected));
     });
 
-    test('Args: ["GitHub", "default"]', () {
-      args = ['GitHub', 'default'];
+    test('Args: ["GitHub", "sample"]', () {
+      args = ['GitHub', 'sample'];
       sepArgs = new SeparateArgs(args);
       final actual = {
         'title': sepArgs.title(),
@@ -49,7 +49,7 @@ void main() {
       };
       final expected = {
         'title': 'GitHub',
-        'preset': 'default',
+        'preset': 'sample',
         'options': ['']
       };
       expect(actual, equals(expected));
@@ -65,14 +65,14 @@ void main() {
       };
       final expected = {
         'title': 'GitHub',
-        'preset': 'default',
+        'preset': '',
         'options': ['-d']
       };
       expect(actual, equals(expected));
     });
 
-    test('Args: ["GitHub", "default", "-s", "--length=12"]', () {
-      args = ['GitHub', 'default', '-s', '--length=12'];
+    test('Args: ["GitHub", "sample", "-s", "--length=12"]', () {
+      args = ['GitHub', 'sample', '-s', '--length=12'];
       sepArgs = new SeparateArgs(args);
       final actual = {
         'title': sepArgs.title(),
@@ -81,7 +81,7 @@ void main() {
       };
       final expected = {
         'title': 'GitHub',
-        'preset': 'default',
+        'preset': 'sample',
         'options': ['-s', '--length=12']
       };
       expect(actual, equals(expected));
@@ -98,8 +98,8 @@ void main() {
       sepArgs.options();
     }
 
-    test('Args: ["GitHub", "-s", "default"]', () {
-      args = ['GitHub', '-s', 'default'];
+    test('Args: ["GitHub", "-s", "sample"]', () {
+      args = ['GitHub', '-s', 'sample'];
       sepArgs = new SeparateArgs(args);
       try {
         check(sepArgs);
@@ -109,8 +109,8 @@ void main() {
       fail('The command-line with syntax error passes the test.');
     });
 
-    test('Args: ["GitHub", "default", "foo"]', () {
-      args = ['GitHub', 'default', 'foo'];
+    test('Args: ["GitHub", "sample", "foo"]', () {
+      args = ['GitHub', 'sample', 'foo'];
       sepArgs = new SeparateArgs(args);
       try {
         check(sepArgs);
@@ -120,8 +120,8 @@ void main() {
       fail('The command-line with syntax error passes the test.');
     });
 
-    test('Args: ["GitHub", "default", "foo", "-s"]', () {
-      args = ['GitHub', 'default', 'foo', '-s'];
+    test('Args: ["GitHub", "sample", "foo", "-s"]', () {
+      args = ['GitHub', 'sample', 'foo', '-s'];
       sepArgs = new SeparateArgs(args);
       try {
         check(sepArgs);
