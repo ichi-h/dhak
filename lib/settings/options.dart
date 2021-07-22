@@ -2,6 +2,7 @@ import 'package:dhak/items_for_gen_pass/algorithm.dart';
 import 'package:dhak/items_for_gen_pass/cost.dart';
 import 'package:dhak/items_for_gen_pass/pass_length.dart';
 import 'package:dhak/items_for_gen_pass/symbols.dart';
+import 'package:dhak/settings/default_preset.dart';
 import 'package:dhak/settings/settings.dart';
 
 enum OptionTarget { force, display, len, sym, algo, cost }
@@ -24,9 +25,10 @@ class Options extends Settings {
 
   @override
   PassLength passLength() {
-    final len = this._procMatchedOpt<String>(OptionTarget.len, (opt) {
+    var len = this._procMatchedOpt<String>(OptionTarget.len, (opt) {
       return opt.replaceAll('--len=', '');
     });
+    len ??= DefaultPreset.passLength;
     return PassLength(len);
   }
 
@@ -35,33 +37,35 @@ class Options extends Settings {
     var sym = this._procMatchedOpt<String>(OptionTarget.sym, (opt) {
       return opt.replaceAll('--sym=', '');
     });
-
+    sym ??= DefaultPreset.symbols;
     return Symbols(sym);
   }
 
   @override
   Algorithm algorithm() {
-    final algo = this._procMatchedOpt<String>(OptionTarget.algo, (opt) {
+    var algo = this._procMatchedOpt<String>(OptionTarget.algo, (opt) {
       return opt.replaceAll('--algo=', '');
     });
+    algo ??= DefaultPreset.algo;
     return Algorithm(algo);
   }
 
   @override
   Cost cost() {
-    final cost = this._procMatchedOpt<String>(OptionTarget.cost, (opt) {
+    var cost = this._procMatchedOpt<String>(OptionTarget.cost, (opt) {
       return opt.replaceAll('--cost=', '');
     });
+    cost ??= DefaultPreset.cost;
     return Cost(cost);
   }
 
-  T _procMatchedOpt<T>(OptionTarget target, _Callback<T> callback) {
+  T? _procMatchedOpt<T>(OptionTarget target, _Callback<T> callback) {
     for (var opt in this._options) {
       if (this._equals(opt, target)) {
         return callback(opt);
       }
     }
-    throw _NoReturnValueException('There is no option matched with "$target".');
+    return null;
   }
 
   bool _equals(String option, OptionTarget target) {
@@ -86,10 +90,4 @@ class Options extends Settings {
         return option.contains('--cost=');
     }
   }
-}
-
-class _NoReturnValueException implements Exception {
-  final String message;
-
-  _NoReturnValueException(this.message);
 }

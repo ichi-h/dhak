@@ -1,42 +1,38 @@
 import 'dart:math';
 
 import 'package:dbcrypt/dbcrypt.dart';
-import 'package:dhak/args/options.dart';
 import 'package:dhak/cmd/generate/password_operator.dart';
 import 'package:dhak/cmd/generate/password_status.dart';
-import 'package:dhak/config/preset.dart';
 
 class PasswordGen {
   final String _target;
-  final Preset _preset;
-  final Options _options;
+  final int _len;
+  final List<String> _sym;
+  final String _salt;
+  final bool _force;
 
-  PasswordGen(this._target, this._preset, this._options);
+  PasswordGen(this._target, this._len, this._sym, this._salt, this._force);
 
   String getPassword() {
-    var force = this._options.exist(OptionTarget.force);
-    var password = this._genPassword(force);
+    var password = this._genPassword();
 
     final rnd = Random(password.hashCode);
     PasswordStatus status = PasswordStatus(password);
-    while (!status.isSecure(force)) {
+    while (!status.isSecure(this._force)) {
       var num = rnd.nextInt(100) + 1;
-      password = this._genPassword(force, num);
+      password = this._genPassword(num);
       status = PasswordStatus(password);
     }
 
     return password;
   }
 
-  String _genPassword(bool force, [int rndInt = 0]) {
-    final salt = this._getSalt();
-
+  String _genPassword([int rndInt = 0]) {
     // Add hash until password exceeds passLength.
     var hash = '';
     var encrypted = '$rndInt${this._target}';
-    var len = this._getPassLength(force);
-    while (hash.length < len) {
-      encrypted = DBCrypt().hashpw(encrypted, salt);
+    while (hash.length < this._len) {
+      encrypted = DBCrypt().hashpw(encrypted, this._salt);
 
       // Extract only hash value.
       for (var i = encrypted.length - 1; 29 <= i; i--) {
@@ -44,61 +40,16 @@ class PasswordGen {
       }
     }
 
-    var password = hash.substring(0, len);
+    var password = hash.substring(0, this._len);
 
     // Remove symbols which exist from the beginning.
     final operator = PasswordOperator(password);
     password = operator.replaceSymbols();
 
-    var symbols = this._getSymbols();
-    if (symbols.length != 0) {
-      password = operator.replaceAtRandomWith(symbols);
+    if (this._sym.length != 0) {
+      password = operator.replaceAtRandomWith(this._sym);
     }
 
     return password;
-  }
-
-  int _getPassLength(bool force) {
-    var len = this._preset.passLength().value(force);
-    if (this._options.exist(OptionTarget.len)) {
-      len = this._options.passLength().value(force);
-    }
-    return len;
-  }
-
-  List<String> _getSymbols() {
-    var sym = this._preset.symbols().value();
-    if (this._options.exist(OptionTarget.sym)) {
-      sym = this._options.symbols().value();
-    }
-    return sym;
-  }
-
-  String _getSalt() {
-    final algo = this._getAlgo();
-    final cost = this._getCost();
-    final hashCode = this._target.hashCode;
-
-    final rnd = Random(hashCode);
-    var salt = DBCrypt().gensaltWithRoundsAndRandom(cost, rnd);
-    salt = salt.replaceFirst('2b', algo);
-
-    return salt;
-  }
-
-  String _getAlgo() {
-    var algo = this._preset.algorithm().value();
-    if (this._options.exist(OptionTarget.algo)) {
-      algo = this._options.algorithm().value();
-    }
-    return algo;
-  }
-
-  int _getCost() {
-    var cost = this._preset.cost().value();
-    if (this._options.exist(OptionTarget.cost)) {
-      cost = this._options.cost().value();
-    }
-    return cost;
   }
 }

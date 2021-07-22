@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:console/console.dart';
 import 'package:dhak/settings/default_preset.dart';
 import 'package:dhak/settings/preset.dart';
+import 'package:dhak/util/color_print.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
 class Config {
@@ -12,6 +14,10 @@ class Config {
     var file = File(path);
     var contents = file.readAsStringSync();
     this._doc = json.decode(contents);
+
+    var text =
+        "WARNING: It seems to use your .dhakrc setting, but you SHOULDN'T use it in terms of information leak.";
+    colorPrint(text, Color.YELLOW);
   }
 
   Preset getPreset(String presetName) {

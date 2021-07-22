@@ -3,11 +3,13 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:dart_clipboard/dart_clipboard.dart';
-import 'package:dhak/args/options.dart';
+import 'package:dhak/crypto/gen_salt.dart';
+import 'package:dhak/settings/config.dart';
+import 'package:dhak/settings/options.dart';
 import 'package:dhak/cmd/cmd.dart';
 import 'package:dhak/cmd/generate/password_gen.dart';
 import 'package:dhak/cmd/generate/password_status.dart';
-import 'package:dhak/config/config.dart';
+import 'package:dhak/settings/settings.dart';
 import 'package:dhak/util/dhak_exception.dart';
 import 'package:dhak/util/hidden_input.dart';
 
@@ -61,14 +63,25 @@ class GenerateCmd extends Cmd {
     final hash = sha512.convert(bytes).bytes;
     final target = String.fromCharCodes(hash);
 
-    final config = Config(this.path);
-    final preset = config.getPreset(this.presetName);
+    Settings settings;
+    if (this.presetName != '') {
+      final config = Config(this.path);
+      settings = config.getPreset(this.presetName);
+    } else {
+      settings = this.options;
+    }
 
-    var passGen = PasswordGen(target, preset, this.options);
-    var password = passGen.getPassword();
+    final force = this.options.exist(OptionTarget.force);
+    final len = settings.passLength().value(force);
+    final sym = settings.symbols().value();
+    final algo = settings.algorithm().value();
+    final cost = settings.cost().value();
+    final salt = GenSalt.generateSaltFromRnd(target.hashCode, algo, cost);
 
-    final clipboard = Clipboard();
-    clipboard.setContents(password);
+    final passGen = PasswordGen(target, len, sym, salt, force);
+    final password = passGen.getPassword();
+
+    Clipboard().setContents(password);
 
     print('Password was copied to clipboard!');
     if (this.options.exist(OptionTarget.display)) {
