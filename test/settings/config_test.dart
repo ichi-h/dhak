@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dhak/config/config.dart';
+import 'package:dhak/settings/config.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dhak/config/default_preset.dart';
-import 'package:dhak/config/preset.dart';
+import 'package:dhak/settings/default_preset.dart';
+import 'package:dhak/settings/preset.dart';
 import 'package:dhak/util/dhak_exception.dart';
 
 class Config {

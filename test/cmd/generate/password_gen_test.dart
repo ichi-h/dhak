@@ -1,7 +1,7 @@
 import 'package:dhak/args/options.dart';
 import 'package:dhak/cmd/generate/password_gen.dart';
-import 'package:dhak/config/config.dart';
-import 'package:dhak/config/preset.dart';
+import 'package:dhak/settings/config.dart';
+import 'package:dhak/settings/preset.dart';
 import 'package:test/test.dart';
 
 List<String> genPasswords(String target, Preset preset, Options options) {
