@@ -1,5 +1,7 @@
+import 'package:console/console.dart';
 import 'package:dhak/items_for_gen_pass/item.dart';
 import 'package:dhak/util/code_unit_range.dart';
+import 'package:dhak/util/color_print.dart';
 
 class Symbols extends Item<List<String>> {
   final String _sym;
@@ -11,7 +13,7 @@ class Symbols extends Item<List<String>> {
     // toSet() is measure for duplication of symbols
     var symbols = this._sym.split('').toSet();
 
-    return symbols.where((symbol) {
+    var result = symbols.where((symbol) {
       var unit = symbol.codeUnitAt(0);
       var status = !CodeUnitRange.isLowerCase(unit) &&
           !CodeUnitRange.isUpperCase(unit) &&
@@ -23,5 +25,12 @@ class Symbols extends Item<List<String>> {
 
       return status;
     }).toList();
+
+    if (result.length == 0) {
+      var text = 'WARNING: The password does not contain any symbols.';
+      colorPrint(text, Color.YELLOW);
+    }
+
+    return result;
   }
 }
