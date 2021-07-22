@@ -1,5 +1,5 @@
 class GlobalConst {
-  static const VERSION = '0.1.0';
+  static const VERSION = '0.2.0';
 
   static final letters = [
     GlobalConst.LOWER_CASE,
