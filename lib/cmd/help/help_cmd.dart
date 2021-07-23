@@ -4,31 +4,31 @@ class HelpCmd extends Cmd {
   @override
   void run() {
     print(
-        '''Usage: dhak [-h, --help] [-v, --version] <title> (<preset>) [option]
+        r'''Usage: dhak [-h, --help] [-v, --version] <title> (<preset>) [options]
 
 -h, --help:
-    Display the help of dhak.
+    Display the help of Dhak.
 -v, --version:
-    Display the version of dhak.
+    Display the version of Dhak.
 title:
     The name of the service.
 preset:
-    The pre-prepared setting for password generation (you can add a preset in ~/.dhakrc).
-    If you omit this, the value will be "default".
-option:
+    The pre-prepared setting for password generation (you can add a preset to ~/.dhakrc).
+options:
     Specify additional functions as needed.
-    dhak will use the optional settings in preference to the preset ones.
+    Dhak will use the optional settings in preference to the preset ones.
+    The following values of the options mean the default values in this app. If you omit a option, Dhak will use them.
     -d, --display
         Display the password in the terminal.
-    -f, --force
-        Generate a non-secure password forcibly, such as a password whose length is less than 8 or a password which has only lower-case.
-    --len=
-        Set a password length. If it is less than 8, you cannot generate the password basically.
-    --sym=
+    -f, --force (deprecated)
+        Forcibly generate a password which may be insecure, such as a password whose length is less than 12 or a password which has only lower-case.
+    --len=20
+        Set a password length. If it is less than 12, you cannot generate the password basically.
+    --sym=!"#$%&‘()*+,-./:;<=>?@[\]^_`{|}~
         Set symbols used the password generation.
-    --algo=
-        Set an algorithm of BCrypt. You can use "2", "2a", "2y" and "2b (default)".
-    --cost=
+    --algo=2b
+        Set an algorithm of BCrypt. You can use "2", "2a", "2y" and "2b".
+    --cost=10
         Set a cost of BCrypt. It must be between 4 and 31. The actual rounds of stretching are 2^n.
 ''');
   }
