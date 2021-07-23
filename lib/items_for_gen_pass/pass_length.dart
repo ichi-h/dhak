@@ -34,7 +34,7 @@ class PassLength extends Item<int> {
 
     if (len < 12) {
       var text = 'WARNING: The password length "$len" is too short. '
-          'It should be more than 12.';
+          'It should be 12 or more.';
       colorPrint(text, Color.YELLOW);
     }
 
