@@ -33,11 +33,9 @@ dhak [-h, --help] [-v, --version] <title> (<preset>) [options]
 
 The name of the service.
 
-### Preset (deprecated)
+### Preset
 
 The pre-prepared setting for password generation (you can add a preset in ~/.dhakrc).
-
-**In terms of information leak, using preset was deprecated.**
 
 ### Options
 
@@ -45,7 +43,7 @@ Specify additional functions as needed.
 
 Dhak will use the optional settings in preference to the preset ones.
 
-The following values of the options means the default value in this app. If you omit a option, Dhak will use them.
+The following values of the options means the default value in this app. If you omit an option, Dhak will use them.
 
 - -d, --display
     - Display the password in the terminal.
