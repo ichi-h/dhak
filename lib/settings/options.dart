@@ -14,8 +14,6 @@ class Options extends Settings {
 
   Options(this._options);
 
-  List<String> toList() => this._options;
-
   bool exist(OptionTarget target) {
     for (var option in this._options) {
       if (this._equals(option, target)) return true;
