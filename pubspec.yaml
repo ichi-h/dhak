@@ -1,5 +1,5 @@
 name: dhak
-description: A password manager without storing passwords in Dart/Flutter.
+description: A password manager without keeping passwords in Dart/Flutter.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

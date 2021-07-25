@@ -2,7 +2,7 @@
 
 [![Dhak CI](https://github.com/ippee/dhak/actions/workflows/main.yml/badge.svg)](https://github.com/ippee/dhak/actions/workflows/main.yml)
 
-A password manager without storing passwords, in Dart/Flutter.
+A password manager without keeping passwords, in Dart/Flutter.
 
 ## What is Dhak?
 
@@ -10,7 +10,7 @@ _Dhak_ is a CUI/GUI application to manage your passwords.
 
 Dhak combines your original passphrase with the name of the service that requires a password, hashes it, and uses the value as the new password.
 
-In this way, you can manage your passwords without storing them anywhere.
+In this way, you can manage your passwords without keeping them anywhere.
 
 ## Installation
 
@@ -77,4 +77,4 @@ That's where the so-called _security measures_ come into play, such as hiding su
 General password managers manage confidential information by encrypting/decrypting passwords (i.e., replacing them with something that seems meaningless to others).  
 However, it does not change the fact that they are still keeping confidential information in any form, which means that you are taking the risk of information leakage in terms of fundamental security measures.
 
-In order to minimize this risk, Dhak manages passwords by NOT storing such confidential information, but **by generating them when needed**.
+In order to minimize this risk, Dhak manages passwords by NOT keeping such confidential information, but **by generating them when needed**.
