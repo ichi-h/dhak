@@ -81,7 +81,7 @@ class GenerateCmd extends Cmd {
     final passGen = PasswordGen(target, len, sym, salt, force);
     final password = passGen.getPassword();
 
-    Clipboard().setContents(password);
+    Clipboard.setContents(password);
 
     print('Password was copied to clipboard!');
     if (this.options.exist(OptionTarget.display)) {
