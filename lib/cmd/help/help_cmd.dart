@@ -6,15 +6,16 @@ class HelpCmd extends Cmd {
     print(
         r'''Usage: dhak [-h, --help] [-v, --version] <title> (<preset>) [options]
 
--h, --help:
-    Display the help of Dhak.
--v, --version:
-    Display the version of Dhak.
-title:
+Command:
+    -h, --help
+        Display the help of Dhak.
+    -v, --version
+        Display the version of Dhak.
+Title:
     The name of the service.
-preset:
+Preset:
     The pre-prepared setting for password generation (you can add a preset to ~/.dhakrc).
-options:
+Options:
     Specify additional functions as needed.
     Dhak will use the optional settings in preference to the preset ones.
     The following values of the options mean the default values in this app. If you omit a option, Dhak will use them.
@@ -30,6 +31,8 @@ options:
         Set an algorithm of BCrypt. You can use "2", "2a", "2y" and "2b".
     --cost=10
         Set a cost of BCrypt. It must be between 4 and 31. The actual rounds of stretching are 2^n.
+
+For more details, see https://ippee.github.io/dhak_docs/
 ''');
   }
 }
