@@ -1,13 +1,13 @@
 {
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A CUI/GUI password manager without keeping passwords, in Dart/Flutter.",
   "homepage": "https://ippee.github.io/dhak_docs",
   "license": "Mozilla Public License Version 2.0",
   "architecture": {
     "64bit": {
-      "url": "https://github.com/ippee/dhak/releases/download/0.2.0/dhak_for_win_0.2.0.7z",
-      "hash": "824698ca41ef70841a9c80d9c5ee2209067d513c1ff9f2d8731be4a46b00476c",
-      "extract_dir": "dhak_for_win_0.2.0"
+      "url": "https://github.com/ippee/dhak/releases/download/0.2.1/dhak_for_win_0.2.1.7z",
+      "hash": "789e1c3c965bc885e5dd6f56270c63e44855bb60d2b3a81a2a4b4beef62ff964",
+      "extract_dir": "dhak_for_win_0.2.1"
     }
   },
   "bin": "bin\\dhak.exe",
