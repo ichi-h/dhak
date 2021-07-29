@@ -17,7 +17,7 @@
   "autoupdate": {
     "architecture": {
       "64bit": {
-        "url": "https://github.com/pyenv-win/pyenv-win/archive/dhak_for_win_$version.7z",
+        "url": "https://github.com/ippee/dhak/archive/dhak_for_win_$version.7z",
         "extract_dir": "dhak_for_win_$version"
       }
     }
